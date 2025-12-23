@@ -1,0 +1,15 @@
+<button
+  [attr.aria-label]="ariaLabel() || text()"
+  [type]="type()"
+  (click)="onClick($event)"
+  [disabled]="disabled() || loading()"
+  [class]="buttonClasses()"
+>
+  @if (loading()) {
+  <lucide-angular class="spinner" [img]="loaderIcon" [size]="iconSize()"></lucide-angular>
+  } @else if (icon()) {
+  <lucide-angular [img]="icon()!" [size]="iconSize()"></lucide-angular>
+  } @if (text()) {
+  {{ text() }}
+  }
+</button>

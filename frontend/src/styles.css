@@ -1,0 +1,198 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* --- 1. Primary / Brand --- */
+  --primary: #6366f1; /* Indigo 500 - Modern SaaS feel */
+  --primary-hover: #4f46e5;
+  --primary-light: #e0e7ff; /* Great for active sidebar items */
+  --on-primary: #ffffff; /* Text on primary buttons */
+
+  /* --- 2. Neutrals (Backgrounds & Borders) --- */
+  --bg-body: #f8fafc; /* Slate 50 - Very light page background */
+  --bg-surface: #ffffff; /* Pure white for Cards/Modals */
+  --bg-sidebar: #0f172a; /* Slate 900 - Dark sidebar looks professional */
+
+  --border-light: #f1f5f9; /* Slate 100 - Subtle separators */
+  --border-main: #e2e8f0; /* Slate 200 - Standard card/input borders */
+  --border-strong: #cbd5e1; /* Slate 300 - Focus/Hover borders */
+
+  /* --- 3. Text Colors --- */
+  --text-main: #0f172a; /* Slate 900 - Main headings/content */
+  --text-muted: #64748b; /* Slate 500 - Metadata, labels, timestamps */
+  --text-disabled: #94a3b8; /* Slate 400 - Placeholder text */
+  --text-on-dark: #f1f5f9; /* White-ish text for the dark sidebar */
+
+  /* --- 4. Semantic / Status (Crucial for Tickets) --- */
+  /* Using softer 'Pastel' backgrounds with 'Bold' text is the modern trend */
+
+  --status-open-bg: #e0f2fe; /* Sky 100 */
+  --status-open-text: #0369a1; /* Sky 700 */
+
+  --status-progress-bg: #fef3c7; /* Amber 100 */
+  --status-progress-text: #b45309; /* Amber 700 */
+
+  --status-resolved-bg: #dcfce7; /* Emerald 100 */
+  --status-resolved-text: #15803d; /* Emerald 700 */
+
+  --status-closed-bg: #f1f5f9; /* Slate 100 */
+  --status-closed-text: #475569; /* Slate 600 */
+
+  --status-critical-bg: #fee2e2; /* Red 100 */
+  --status-critical-text: #b91c1c; /* Red 700 */
+
+  /* --- 5. Elevation / Shadows --- */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+
+  /* --- 6. Layout & Sizing --- */
+  --sidebar-width: 26rem; /* 260px */
+  --header-height: 6.4rem; /* 64px */
+  --radius-sm: 0.4rem; /* 4px */
+  --radius-md: 0.8rem; /* 8px - Main cards */
+  --radius-lg: 1.2rem; /* 12px - Modals/Big components */
+  --radius-full: 9999px; /* Pills/Badges */
+}
+
+/* RESETS AND ROOT STYLES */
+html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-size: 1.6rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  border: none;
+  outline: none;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+#root,
+#__next {
+  isolation: isolate;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* FORM STYLES */
+.form-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.control {
+  display: flex;
+  flex-direction: column;
+}
+.control label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--text-muted);
+  font-size: 1.4rem;
+}
+.control input,
+.control textarea {
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--border-main);
+  border-radius: var(--radius-sm);
+  font-size: 1.6rem;
+  transition: border-color 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+.control input:focus,
+.control textarea:focus {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.control input.ng-invalid.ng-touched,
+.control textarea.ng-invalid.ng-touched {
+  border-color: var(--status-critical-text);
+}
+.error-container {
+  min-height: 1.4rem;
+  margin-top: 0.4rem;
+}
+
+.error {
+  margin-top: 0.4rem;
+  color: var(--status-critical-text);
+  font-size: 1.2rem;
+}
+
+/* LINK STYLES */
+.app-link {
+  color: var(--primary);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+  font-weight: 500;
+}
+.app-link:hover {
+  color: var(--primary-hover);
+}

@@ -1,0 +1,29 @@
+<div class="auth-card">
+  <app-card>
+    <h2>Login</h2>
+    <form class="form-main" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <app-form-input
+        id="email"
+        type="email"
+        [control]="form.controls.email"
+        label="Email"
+        [required]="true"
+        errorMessage="Email is required"
+      />
+      <app-form-input
+        id="password"
+        type="password"
+        [control]="form.controls.password"
+        label="Password"
+        [required]="true"
+        errorMessage="Password is required"
+      />
+      <div class="error-container"></div>
+      <app-button size="full" type="submit" [disabled]="isSubmitDisabled" text="Login" />
+    </form>
+    <p class="register-link">
+      Don't have an account?
+      <a class="app-link" routerLink="/register">Register here</a>
+    </p></app-card
+  >
+</div>

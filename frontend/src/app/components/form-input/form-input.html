@@ -1,0 +1,14 @@
+<div class="control">
+  <label [for]="id()">
+    {{ label() }}
+    @if (required()) {
+    <span class="required">*</span>
+    }
+  </label>
+  <input [id]="id()" [type]="type()" [placeholder]="placeholder()" [formControl]="control()" />
+  <div class="error-container">
+    @if (showError) {
+    <p class="error">{{ errorMessage() }}</p>
+    }
+  </div>
+</div>

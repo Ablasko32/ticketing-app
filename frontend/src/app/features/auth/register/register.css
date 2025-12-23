@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.register-link {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1.3rem;
+  color: var(--text-muted);
+}
+
+.auth-card {
+  width: 90%;
+  max-width: 42rem;
+}

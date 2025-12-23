@@ -1,0 +1,19 @@
+:host {
+  height: 100svh;
+  overflow-y: hidden;
+  width: 100dvw;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+main {
+  overflow-y: auto;
+  display: flex;
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

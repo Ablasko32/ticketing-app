@@ -1,0 +1,50 @@
+<div class="auth-card">
+  <app-card>
+    <h2>Register</h2>
+    <form class="form-main" [formGroup]="form" (ngSubmit)="onSubmit()">
+      <app-form-input
+        id="email"
+        type="email"
+        [control]="form.controls.email"
+        label="Email"
+        [required]="true"
+        errorMessage="Email is required"
+      />
+      <app-form-input
+        id="password"
+        type="password"
+        [control]="form.controls.password"
+        label="Password"
+        [required]="true"
+        errorMessage="Password is required (minimum 6 characters)"
+      />
+      <app-form-input
+        id="confirmPassword"
+        type="password"
+        [control]="form.controls.confirmPassword"
+        label="Confirm Password"
+        [required]="true"
+        errorMessage="Confirm password is required"
+      />
+
+      <app-form-input
+        id="organization"
+        type="text"
+        [control]="form.controls.organizationName"
+        label="Organization name"
+        [required]="true"
+        errorMessage="Organization is required (minumum 4 characters)"
+      />
+      <div class="error-container">
+        @if (form.errors?.['passwordMismatch'] && form.controls.confirmPassword.touched) {
+        <p class="error">Passwords do not match.</p>
+        }
+      </div>
+      <app-button size="full" type="submit" [disabled]="isSubmitDisabled" text="Login" />
+    </form>
+    <p class="register-link">
+      You are a part of organization?
+      <a class="app-link" routerLink="/login">Login here</a>
+    </p>
+  </app-card>
+</div>
