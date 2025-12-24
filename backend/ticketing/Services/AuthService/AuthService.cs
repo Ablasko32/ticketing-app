@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using ticketing.DTOs;
 using ticketing.Repositories.Interface;
 using ticketing.Services.Interface;
@@ -57,6 +58,32 @@ namespace ticketing.Services
             ;
 
             return await _authRepository.RegisterUserAsync(registerUserData, adminUser.OrganizationName);
+        }
+
+        public AuthStatusDTO GetAuthStatus()
+        {
+            var user = _httpContextAccessor.HttpContext?.User;
+            if (user == null)
+            {
+                return new AuthStatusDTO
+                {
+                    IsAuthenticated = false,
+                    Role = null,
+                    Email = null,
+                    UserId = null,
+                    //TODO: Add OrganizationName to claims to be extracted from context
+                    //OrganizationName = null 
+                };
+            }
+
+            return new AuthStatusDTO
+            {
+                IsAuthenticated = user.Identity?.IsAuthenticated ?? false,
+                Role = user.FindFirst(ClaimTypes.Role)?.Value,
+                Email = user.FindFirst(ClaimTypes.Email)?.Value,
+                UserId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value,
+                //OrganizationName = user.FindFirst("OrganizationName")?.Value
+            };
         }
 
         public async Task LogoutAsync()

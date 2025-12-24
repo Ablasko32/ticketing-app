@@ -24,10 +24,23 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Password.RequiredLength = 6;
+    //Fast DEV
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequiredUniqueChars = 0;
 }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
 //Configure cookies
-builder.Services.ConfigureApplicationCookie(options => {
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
+    options.Cookie.Name = "FastTicketAuth";
+    options.ExpireTimeSpan = TimeSpan.FromHours(24);
+    options.SlidingExpiration = true;
 
     options.Events.OnRedirectToLogin = context =>
     {
@@ -35,17 +48,22 @@ builder.Services.ConfigureApplicationCookie(options => {
         return Task.CompletedTask;
     };
 
-
     options.Events.OnRedirectToAccessDenied = context =>
     {
         context.Response.StatusCode = StatusCodes.Status403Forbidden;
         return Task.CompletedTask;
     };
-
 });
 
-
-builder.Services.AddAuthentication();
+//Cors
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>() ?? throw new InvalidOperationException("AllowedOrigins is missing in appsettings.json"); ;
+builder.Services.AddCors((options) =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy.WithOrigins(allowedOrigins).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+    });
+});
 
 //Make request injectable
 builder.Services.AddHttpContextAccessor();
@@ -67,6 +85,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("FrontendPolicy");
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

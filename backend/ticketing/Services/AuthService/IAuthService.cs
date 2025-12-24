@@ -12,5 +12,7 @@ namespace ticketing.Services.Interface
         Task LogoutAsync();
 
         Task<IdentityResult> RegisterUserAsync(RegisterUserDTO registerUserData);
+
+        AuthStatusDTO GetAuthStatus();
     }
 }

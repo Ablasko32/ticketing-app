@@ -86,7 +86,6 @@ namespace ticketing.Controllers
                 var result = await _authService.RegisterUserAsync(registerUserData);
                 if (result.Succeeded)
                 {
-
                     return Ok(new { message = "User created succesfully" });
                 }
                 else
@@ -97,6 +96,21 @@ namespace ticketing.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error siging out");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
+        [HttpGet("status")]
+        public IActionResult GetAuthStatus()
+        {
+            try
+            {
+                var result = _authService.GetAuthStatus();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching auth status");
                 return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
             }
         }

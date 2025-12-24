@@ -1,6 +1,38 @@
 @ticketing_HostAddress = http://localhost:5000
 
-GET {{ticketing_HostAddress}}/weatherforecast/
-Accept: application/json
+### ***AUTH CONTROLLER***
+### POST /auth/register
+POST {{ticketing_HostAddress}}/auth/register-admin
+Content-type:application/json
+{
+    "email":"test@email.com",
+    "password":"test123",
+    "organizationName":"Test"
+}
 
-###
+### POST /auth/login
+POST {{ticketing_HostAddress}}/auth/login
+Content-type:application/json
+{
+    "email":"test123@email.com",
+    "password":"test123"
+}
+
+### GET /auth/status
+GET {{ticketing_HostAddress}}/auth/status
+Accept:application/json
+
+
+### POST /auth/logout
+POST {{ticketing_HostAddress}}/auth/logout
+Accept:application/json
+
+
+### POST /auth/register-user
+POST {{ticketing_HostAddress}}/auth/register-user
+Content-type:application/json
+{
+    "email":"test123@email.com",
+    "password":"test123",
+    "role":"agent"
+}
