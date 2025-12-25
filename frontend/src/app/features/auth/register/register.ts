@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Button } from '../../../components/button/button';
 import { Card } from '../../../components/card/card';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormInput } from '../../../components/form-input/form-input';
 import { confirmPasswordValidator } from '../../../shared/validators/confirm-password';
+import { AuthService } from '../../../core/services/auth.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-register',
@@ -14,28 +16,63 @@ import { confirmPasswordValidator } from '../../../shared/validators/confirm-pas
   standalone: true,
 })
 export class RegisterComponent {
+  loading = signal(false);
+  errorMessage = signal<string | null>(null);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
+
   form = new FormGroup(
     {
-      email: new FormControl('', { validators: [Validators.required, Validators.email] }),
-      password: new FormControl('', { validators: [Validators.required, Validators.minLength(6)] }),
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
+        nonNullable: true,
+      }),
+      password: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(6)],
+        nonNullable: true,
+      }),
       confirmPassword: new FormControl('', {
         validators: [Validators.required, Validators.minLength(6)],
+        nonNullable: true,
       }),
       organizationName: new FormControl('', {
         validators: [Validators.required, Validators.minLength(4)],
+        nonNullable: true,
       }),
     },
     { validators: [confirmPasswordValidator] }
   );
 
   get isSubmitDisabled() {
-    return this.form.invalid && this.form.touched;
+    return this.form.invalid || this.loading();
   }
 
   onSubmit() {
     if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
-    console.log(this.form.value);
+    const { email, password, organizationName } = this.form.getRawValue();
+    this.errorMessage.set(null);
+    this.loading.set(true);
+    this.authService
+      .registerAdmin({
+        email,
+        password,
+        organizationName,
+      })
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (response) => {
+          console.log(response.message);
+          this.loading.set(false);
+          this.router.navigate(['login']);
+        },
+        error: (err) => {
+          this.loading.set(false);
+          this.errorMessage.set(err.error[0]?.description || 'An unexpected error occured');
+        },
+      });
   }
 }

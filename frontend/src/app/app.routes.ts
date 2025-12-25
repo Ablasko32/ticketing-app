@@ -10,4 +10,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/register/register').then((m) => m.RegisterComponent),
   },
+  {
+    path: 'app',
+    loadComponent: () => import('./features/user/dashboard/dashboard').then((m) => m.Dashboard),
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
 ];

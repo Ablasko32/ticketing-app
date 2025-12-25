@@ -3,6 +3,7 @@
     <h2>Register</h2>
     <form class="form-main" [formGroup]="form" (ngSubmit)="onSubmit()">
       <app-form-input
+        [disabled]="loading()"
         id="email"
         type="email"
         [control]="form.controls.email"
@@ -11,6 +12,7 @@
         errorMessage="Email is required"
       />
       <app-form-input
+        [disabled]="loading()"
         id="password"
         type="password"
         [control]="form.controls.password"
@@ -19,6 +21,7 @@
         errorMessage="Password is required (minimum 6 characters)"
       />
       <app-form-input
+        [disabled]="loading()"
         id="confirmPassword"
         type="password"
         [control]="form.controls.confirmPassword"
@@ -28,6 +31,7 @@
       />
 
       <app-form-input
+        [disabled]="loading()"
         id="organization"
         type="text"
         [control]="form.controls.organizationName"
@@ -38,9 +42,17 @@
       <div class="error-container">
         @if (form.errors?.['passwordMismatch'] && form.controls.confirmPassword.touched) {
         <p class="error">Passwords do not match.</p>
+        } @if (errorMessage()) {
+        <p class="error">{{ errorMessage() }}</p>
         }
       </div>
-      <app-button size="full" type="submit" [disabled]="isSubmitDisabled" text="Login" />
+      <app-button
+        [loading]="loading()"
+        size="full"
+        type="submit"
+        [disabled]="isSubmitDisabled"
+        text="Register"
+      />
     </form>
     <p class="register-link">
       You are a part of organization?

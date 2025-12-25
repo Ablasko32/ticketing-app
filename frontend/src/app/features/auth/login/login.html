@@ -3,6 +3,7 @@
     <h2>Login</h2>
     <form class="form-main" [formGroup]="form" (ngSubmit)="onSubmit()">
       <app-form-input
+        [disabled]="loading()"
         id="email"
         type="email"
         [control]="form.controls.email"
@@ -11,6 +12,7 @@
         errorMessage="Email is required"
       />
       <app-form-input
+        [disabled]="loading()"
         id="password"
         type="password"
         [control]="form.controls.password"
@@ -18,8 +20,18 @@
         [required]="true"
         errorMessage="Password is required"
       />
-      <div class="error-container"></div>
-      <app-button size="full" type="submit" [disabled]="isSubmitDisabled" text="Login" />
+      <div class="error-container">
+        @if (errorMessage()) {
+        <p class="error">{{ errorMessage() }}</p>
+        }
+      </div>
+      <app-button
+        [loading]="loading()"
+        size="full"
+        type="submit"
+        [disabled]="isSubmitDisabled"
+        text="Login"
+      />
     </form>
     <p class="register-link">
       Don't have an account?
