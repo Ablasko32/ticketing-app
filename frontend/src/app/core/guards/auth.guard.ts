@@ -3,7 +3,7 @@ import { CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { catchError, map, of } from 'rxjs';
 
-export const authGuard: CanMatchFn = (route: Route, segments: UrlSegment[]) => {
+export const authGuard: CanMatchFn = (route, segments) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 

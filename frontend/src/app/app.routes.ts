@@ -17,15 +17,43 @@ export const routes: Routes = [
   },
   {
     path: 'app',
-    loadComponent: () => import('./features/user/dashboard/dashboard').then((m) => m.Dashboard),
+    loadComponent: () =>
+      import('./features/layout/main-layout/main-layout').then((m) => m.MainLayout),
     canMatch: [authGuard, roleGuard],
     data: {
       role: 'admin',
+    },
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/admin/dashboard/dashboard').then((m) => m.Dashboard),
+      },
+    ],
+  },
+  {
+    path: 'app',
+    loadComponent: () => import('./features/user/dashboard/dashboard').then((m) => m.Dashboard),
+    canMatch: [authGuard, roleGuard],
+    data: {
+      role: 'user',
+    },
+  },
+  {
+    path: 'app',
+    loadComponent: () => import('./features/agent/dashboard/dashboard').then((m) => m.Dashboard),
+    canMatch: [authGuard, roleGuard],
+    data: {
+      role: 'agent',
     },
   },
   {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
+  },
+  {
+    path: '**',
+    redirectTo: '/login',
   },
 ];

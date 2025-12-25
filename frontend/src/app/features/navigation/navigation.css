@@ -1,0 +1,27 @@
+nav {
+  background-color: var(--bg-sidebar);
+  color: white;
+  height: 100%;
+  padding: 3rem;
+  padding-top: 12rem;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  height: 100%;
+  gap: 2rem;
+}
+
+a {
+  font-weight: 600;
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+.logout {
+  margin-top: auto;
+}

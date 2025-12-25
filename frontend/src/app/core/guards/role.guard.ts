@@ -1,20 +1,12 @@
-import {
-  ActivatedRouteSnapshot,
-  CanActivateFn,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { CanMatchFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 
-export const roleGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
+export const roleGuard: CanMatchFn = (route, segments) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  const requiredRole = route.data['role'];
+  const requiredRole = route?.data?.['role'];
 
   const authState = authService.authStatus();
 
@@ -26,6 +18,5 @@ export const roleGuard: CanActivateFn = (
     return true;
   }
 
-  //TODO: IF auth but wrong role, login for now
-  return router.parseUrl('/login');
+  return false;
 };

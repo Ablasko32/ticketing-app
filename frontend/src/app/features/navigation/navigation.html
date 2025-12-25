@@ -1,0 +1,12 @@
+<nav>
+  <ul>
+    @for (navItem of userRoutes(); track $index) {
+    <li>
+      <a>{{ navItem.title }}</a>
+    </li>
+    }
+    <div class="logout">
+      <app-logout-button />
+    </div>
+  </ul>
+</nav>

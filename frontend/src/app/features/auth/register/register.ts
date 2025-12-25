@@ -1,12 +1,14 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Button } from '../../../components/button/button';
-import { Card } from '../../../components/card/card';
+
 import { Router, RouterLink } from '@angular/router';
-import { FormInput } from '../../../components/form-input/form-input';
+
 import { confirmPasswordValidator } from '../../../shared/validators/confirm-password';
 import { AuthService } from '../../../core/services/auth.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Button } from '../../../shared/components/button/button';
+import { Card } from '../../../shared/components/card/card';
+import { FormInput } from '../../../shared/components/form-input/form-input';
 
 @Component({
   selector: 'app-register',
