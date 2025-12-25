@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { guestGuard } from './core/guards/guest.guard';
+import { roleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,10 @@ export const routes: Routes = [
   {
     path: 'app',
     loadComponent: () => import('./features/user/dashboard/dashboard').then((m) => m.Dashboard),
-    canMatch: [authGuard],
+    canMatch: [authGuard, roleGuard],
+    data: {
+      role: 'admin',
+    },
   },
   {
     path: '',
