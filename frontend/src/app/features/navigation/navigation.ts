@@ -4,10 +4,11 @@ import { AuthService } from '../../core/services/auth.service';
 import { RouterLink } from '@angular/router';
 import { Button } from '../../shared/components/button/button';
 import { LucideAngularModule, X } from 'lucide-angular';
+import { RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
-  imports: [LogoutButton, RouterLink, Button, LucideAngularModule],
+  imports: [LogoutButton, RouterLink, Button, LucideAngularModule, RouterLinkActive],
   templateUrl: './navigation.html',
   styleUrl: './navigation.css',
 })
@@ -36,6 +37,10 @@ export class Navigation {
 
   toggleMenu() {
     this.isOpen.set(!this.isOpen());
+  }
+
+  onLinkClick() {
+    this.isOpen.set(false);
   }
 }
 

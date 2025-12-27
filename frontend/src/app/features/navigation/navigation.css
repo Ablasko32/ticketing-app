@@ -23,6 +23,10 @@ a:hover {
   color: var(--primary);
 }
 
+.active {
+  color: var(--primary);
+}
+
 .logout {
   margin-top: auto;
 }
