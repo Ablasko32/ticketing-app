@@ -1,8 +1,15 @@
-<nav>
+<app-button
+  (btnClick)="toggleMenu()"
+  [icon]="isOpen() ? closeIcon : closeIcon"
+  size="sm"
+  text="Menu"
+  variant="secondary"
+/>
+<nav [class.showMobileMenu]="isOpen()">
   <ul>
     @for (navItem of userRoutes(); track $index) {
     <li>
-      <a>{{ navItem.title }}</a>
+      <a [routerLink]="navItem.path">{{ navItem.title }}</a>
     </li>
     }
     <div class="logout">

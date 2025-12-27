@@ -1,0 +1,22 @@
+<div class="control">
+  <label [for]="id()">
+    {{ label() }}
+    @if (required()) {
+    <span class="required">*</span>
+    }
+  </label>
+  <select [id]="id()" [formControl]="control()">
+    <option value="" disabled selected>Select {{ label().toLowerCase() }}</option>
+    @for (option of options(); track $index) {
+    <option [value]="option[valueKey()]">
+      {{ option[nameKey()] }}
+    </option>
+    }
+  </select>
+
+  <div class="error-container">
+    @if (showError) {
+    <p class="error">{{ errorMessage() }}</p>
+    }
+  </div>
+</div>

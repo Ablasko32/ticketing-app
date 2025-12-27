@@ -1,0 +1,33 @@
+<header class="page-header">
+  <app-back-button />
+  <h2 class="page-title">Create New Ticket</h2>
+</header>
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  <app-form-input
+    id="title"
+    label="Title"
+    [control]="form.controls.title"
+    errorMessage="Title is required"
+  ></app-form-input>
+
+  <app-form-input
+    id="description"
+    label="Description"
+    [control]="form.controls.description"
+    errorMessage="Description is required"
+  ></app-form-input>
+
+  <app-form-select
+    [options]="priorities"
+    id="priority"
+    label="Priority"
+    [control]="form.controls.priority"
+    errorMessage="Priority is required"
+    valueKey="value"
+  ></app-form-select>
+
+  <div class="actions">
+    <app-button type="submit" text="Save" />
+    <app-button (btnClick)="handleReset()" variant="secondary" type="button" text="Reset" />
+  </div>
+</form>

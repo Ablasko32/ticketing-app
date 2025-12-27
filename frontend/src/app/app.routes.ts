@@ -29,6 +29,10 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/admin/dashboard/dashboard').then((m) => m.Dashboard),
       },
+      {
+        path: 'new',
+        loadComponent: () => import('./features/add-new/add-new').then((m) => m.AddNew),
+      },
     ],
   },
   {

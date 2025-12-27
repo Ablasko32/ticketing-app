@@ -1,9 +1,10 @@
 nav {
   background-color: var(--bg-sidebar);
-  color: white;
+  color: var(--text-on-dark);
   height: 100%;
   padding: 3rem;
   padding-top: 12rem;
+  animation: slideIn 0.2s ease-in-out;
 }
 
 nav ul {
@@ -24,4 +25,40 @@ a:hover {
 
 .logout {
   margin-top: auto;
+}
+
+app-button {
+  display: none;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    position: relative;
+  }
+
+  nav {
+    display: none;
+  }
+
+  nav.showMobileMenu {
+    display: block;
+  }
+
+  app-button {
+    display: block;
+  }
 }
