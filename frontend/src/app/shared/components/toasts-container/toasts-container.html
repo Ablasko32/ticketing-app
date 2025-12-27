@@ -1,0 +1,3 @@
+@for (toast of toasts(); track toast.id) {
+<app-toast [class]="toast.type" [toast]="toast" (close)="removeToast(toast.id)"></app-toast>
+}

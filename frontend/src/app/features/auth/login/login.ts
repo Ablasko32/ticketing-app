@@ -7,6 +7,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { Button } from '../../../shared/components/button/button';
 import { Card } from '../../../shared/components/card/card';
 import { FormInput } from '../../../shared/components/form-input/form-input';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent {
   errorMessage = signal<string | null>(null);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   form = new FormGroup({
     email: new FormControl('', {
@@ -45,13 +47,22 @@ export class LoginComponent {
     this.loading.set(true);
     this.authService.login({ email, password }).subscribe({
       next: (response) => {
-        console.log(response.message);
+        this.toastService.showToast({
+          title: 'Success',
+          message: response.message,
+          type: 'success',
+        });
         this.loading.set(false);
         this.router.navigate(['app']);
       },
       error: (err) => {
         this.loading.set(false);
         this.errorMessage.set(err.error?.message || 'An unexpected error has occured');
+        this.toastService.showToast({
+          title: 'Error',
+          message: err.error?.message || 'An unexpected error has occured',
+          type: 'error',
+        });
       },
     });
   }

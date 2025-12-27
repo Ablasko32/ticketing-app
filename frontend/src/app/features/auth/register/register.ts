@@ -1,14 +1,15 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { Router, RouterLink } from '@angular/router';
 
 import { confirmPasswordValidator } from '../../../shared/validators/confirm-password';
 import { AuthService } from '../../../core/services/auth.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
 import { Button } from '../../../shared/components/button/button';
 import { Card } from '../../../shared/components/card/card';
 import { FormInput } from '../../../shared/components/form-input/form-input';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,7 @@ export class RegisterComponent {
   errorMessage = signal<string | null>(null);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private destroyRef = inject(DestroyRef);
+  private toastService = inject(ToastService);
 
   form = new FormGroup(
     {
@@ -64,16 +65,25 @@ export class RegisterComponent {
         password,
         organizationName,
       })
-      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response) => {
           console.log(response.message);
           this.loading.set(false);
+          this.toastService.showToast({
+            title: 'Sucess',
+            message: response.message,
+            type: 'success',
+          });
           this.router.navigate(['login']);
         },
         error: (err) => {
           this.loading.set(false);
           this.errorMessage.set(err.error[0]?.description || 'An unexpected error occured');
+          this.toastService.showToast({
+            title: 'Error',
+            message: err.error[0]?.description || 'An unexpected error occured',
+            type: 'error',
+          });
         },
       });
   }

@@ -1,0 +1,44 @@
+:host {
+  padding: 1rem 1.8rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 1rem;
+  background-color: var(--bg-surface) / 30;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-main);
+  animation: slideIn 0.2s ease-in-out;
+}
+
+:host(.error) .message {
+  color: var(--status-critical-text);
+}
+
+:host(.success) .message {
+  color: var(--status-resolved-text);
+}
+
+.title {
+  font-weight: bold;
+}
+
+.message {
+  font-size: 1.4rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

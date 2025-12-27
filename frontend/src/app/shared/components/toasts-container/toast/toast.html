@@ -1,0 +1,7 @@
+<div class="toast">
+  <header>
+    <p class="title">{{ toast().title }}</p>
+    <app-button (btnClick)="closeToast()" [icon]="closeIcon" />
+  </header>
+  <p class="message">{{ toast().message }}</p>
+</div>
