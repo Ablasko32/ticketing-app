@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ticketing.Data;
@@ -13,6 +14,9 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Add Mapper
+builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
 // Init Db Connection
 builder.Services.AddDbContext<ApplicationContext>(options =>
@@ -36,7 +40,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
-    options.Cookie.SameSite =builder.Environment.IsDevelopment()? SameSiteMode.Lax  : SameSiteMode.None;
+    options.Cookie.SameSite = builder.Environment.IsDevelopment() ? SameSiteMode.Lax : SameSiteMode.None;
     options.Cookie.SecurePolicy = builder.Environment.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
     options.Cookie.Name = "FastTicketAuth";
     options.ExpireTimeSpan = TimeSpan.FromHours(24);
@@ -85,7 +89,6 @@ if (app.Environment.IsDevelopment())
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
-
 }
 
 app.UseCors("FrontendPolicy");

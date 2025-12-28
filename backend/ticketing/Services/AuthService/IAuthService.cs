@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using ticketing.DTOs;
+using ticketing.Models;
 
 namespace ticketing.Services.Interface
 {
@@ -14,5 +15,7 @@ namespace ticketing.Services.Interface
         Task<IdentityResult> RegisterUserAsync(RegisterUserDTO registerUserData);
 
         AuthStatusDTO GetAuthStatus();
+
+        Task<List<UserDTO>> GetAllUsersAsync();
     }
 }

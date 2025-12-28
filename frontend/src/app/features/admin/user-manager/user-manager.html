@@ -2,10 +2,20 @@
   <h2 class="page-title">Manage Users</h2>
 </header>
 <app-button text="Add User" (btnClick)="openAddModal()"></app-button>
+@if (loading()) {
+<div class="loader-container">
+  <app-loader></app-loader>
+</div>
+}@else if (error()) {
+<p class="error">{{ error() }}</p>
+} @else {
 <ul>
-  @for (user of users(); track $index) {
-
+  @for (user of users(); track user.id) {
   <app-user-row [userData]="user"></app-user-row>
-
+  } @empty {
+  <li>
+    <p class="fallback-text">No users found. Start by creating your first user.</p>
+  </li>
   }
 </ul>
+}

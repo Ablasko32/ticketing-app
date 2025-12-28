@@ -100,6 +100,22 @@ namespace ticketing.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
+        [HttpGet("all-users")]
+        public async Task<IActionResult> GetAllUsersAsync()
+        {
+            try
+            {
+                var users = await _authService.GetAllUsersAsync();
+                return Ok(users);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching all users");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
         [HttpGet("status")]
         public IActionResult GetAuthStatus()
         {

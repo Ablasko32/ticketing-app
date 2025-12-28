@@ -9,3 +9,10 @@ ul {
 ul app-user-row {
   border-bottom: 1px solid var(--border-main);
 }
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+}

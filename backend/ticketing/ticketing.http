@@ -14,8 +14,8 @@ Content-type:application/json
 POST {{ticketing_HostAddress}}/auth/login
 Content-type:application/json
 {
-    "email":"test123@email.com",
-    "password":"test123"
+    "email":"test1@email.com",
+    "password":"banana"
 }
 
 ### GET /auth/status
@@ -36,3 +36,7 @@ Content-type:application/json
     "password":"test123",
     "role":"agent"
 }
+
+### GET /auth/all-users
+GET {{ticketing_HostAddress}}/auth/all-users
+Accept:application/json

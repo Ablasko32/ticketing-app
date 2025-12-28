@@ -17,6 +17,8 @@ namespace ticketing.Repositories.Interface
 
         Task<IdentityResult> RegisterUserAsync(RegisterUserDTO registerUserData, string organizationName);
 
+        Task<List<AppUser>> GetAllUsersAsync(string organizationName);
+
         Task<AppUser?> GetUserAsync(ClaimsPrincipal principal);
     }
 }

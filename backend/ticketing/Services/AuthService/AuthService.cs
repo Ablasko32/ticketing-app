@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using ticketing.DTOs;
 using ticketing.Repositories.Interface;
@@ -10,11 +11,13 @@ namespace ticketing.Services
     {
         private readonly IAuthRepository _authRepository;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMapper _mapper;
 
-        public AuthService(IAuthRepository authRepository, IHttpContextAccessor httpContextAccessor)
+        public AuthService(IAuthRepository authRepository, IHttpContextAccessor httpContextAccessor, IMapper mapper)
         {
             _authRepository = authRepository;
             _httpContextAccessor = httpContextAccessor;
+            _mapper = mapper;
         }
 
         public async Task<IdentityResult> RegisterAdminAsync(RegisterAdminDTO registerData)
@@ -72,7 +75,7 @@ namespace ticketing.Services
                     Email = null,
                     UserId = null,
                     //TODO: Add OrganizationName to claims to be extracted from context
-                    //OrganizationName = null 
+                    //OrganizationName = null
                 };
             }
 
@@ -84,6 +87,17 @@ namespace ticketing.Services
                 UserId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value,
                 //OrganizationName = user.FindFirst("OrganizationName")?.Value
             };
+        }
+
+        public async Task<List<UserDTO>> GetAllUsersAsync()
+        {
+            //TODO: Filter list ,remove the admin
+            var user = _httpContextAccessor.HttpContext!.User;
+            var adminUser = await _authRepository.GetUserAsync(user);
+
+            var users = await _authRepository.GetAllUsersAsync(adminUser!.OrganizationName);
+
+            return _mapper.Map<List<UserDTO>>(users);
         }
 
         public async Task LogoutAsync()

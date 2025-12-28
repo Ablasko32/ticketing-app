@@ -71,6 +71,12 @@ namespace ticketing.Repositories
             return await _userManager.GetUserAsync(principal);
         }
 
+
+        public async Task<List<AppUser>> GetAllUsersAsync(string organizationName)
+        {
+           return await _userManager.Users.Where(u => u.OrganizationName == organizationName).ToListAsync();
+        }
+
         public async Task<bool> IsOrganizationTameTakenAsync(string organizationName)
         {
             return await _userManager.Users.AnyAsync(u => u.OrganizationName.ToLower() == organizationName.ToLower());
