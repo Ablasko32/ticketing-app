@@ -1,0 +1,11 @@
+<header class="page-header">
+  <h2 class="page-title">Manage Users</h2>
+</header>
+<app-button text="Add User" (btnClick)="openAddModal()"></app-button>
+<ul>
+  @for (user of users(); track $index) {
+
+  <app-user-row [userData]="user"></app-user-row>
+
+  }
+</ul>

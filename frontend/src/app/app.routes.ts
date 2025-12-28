@@ -33,6 +33,11 @@ export const routes: Routes = [
         path: 'new',
         loadComponent: () => import('./features/add-new/add-new').then((m) => m.AddNew),
       },
+      {
+        path: 'user-manager',
+        loadComponent: () =>
+          import('./features/admin/user-manager/user-manager').then((m) => m.UserManager),
+      },
     ],
   },
   {
@@ -43,14 +48,14 @@ export const routes: Routes = [
       role: 'user',
     },
   },
-  {
-    path: 'app',
-    loadComponent: () => import('./features/agent/dashboard/dashboard').then((m) => m.Dashboard),
-    canMatch: [authGuard, roleGuard],
-    data: {
-      role: 'agent',
-    },
-  },
+  // {
+  //   path: 'app',
+  //   loadComponent: () => import('./features/agent/dashboard/dashboard').then((m) => m.Dashboard),
+  //   canMatch: [authGuard, roleGuard],
+  //   data: {
+  //     role: 'agent',
+  //   },
+  // },
   {
     path: '',
     redirectTo: '/login',

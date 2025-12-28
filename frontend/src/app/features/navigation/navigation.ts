@@ -15,13 +15,15 @@ import { RouterLinkActive } from '@angular/router';
 export class Navigation {
   isOpen = signal(false);
   private authService = inject(AuthService);
+  role = computed(() => this.authService.authStatus()?.role);
   closeIcon = X;
 
   userRoutes = signal(userRoutes);
 
   roleRoutes = computed(() => {
-    switch (this.authService.authStatus()?.role) {
+    switch (this.role()) {
       case 'admin': {
+        console.log('ADMIN ROUTES');
         return adminRoutes;
       }
       case 'user': {
@@ -71,6 +73,10 @@ const adminRoutes = [
   {
     path: 'tickets',
     title: 'Tickets',
+  },
+  {
+    path: 'user-manager',
+    title: 'Manage Users',
   },
 ];
 

@@ -7,6 +7,16 @@ nav {
   animation: slideIn 0.2s ease-in-out;
 }
 
+.role-welcome {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  margin-bottom: 6rem;
+}
+
+.role-welcome span {
+  text-transform: capitalize;
+}
+
 nav ul {
   display: flex;
   flex-direction: column;

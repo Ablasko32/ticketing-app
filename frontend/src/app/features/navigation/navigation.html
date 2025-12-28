@@ -6,8 +6,11 @@
   variant="secondary"
 />
 <nav [class.showMobileMenu]="isOpen()">
+  <p class="role-welcome">
+    Welcome, <span>{{ role() }}</span>
+  </p>
   <ul>
-    @for (navItem of userRoutes(); track $index) {
+    @for (navItem of roleRoutes(); track $index) {
     <li (click)="onLinkClick()">
       <a
         [routerLinkActiveOptions]="{ exact: navItem.path === '' }"
