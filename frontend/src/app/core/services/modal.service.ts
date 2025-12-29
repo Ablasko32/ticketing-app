@@ -42,7 +42,7 @@ export class ModalService {
     });
 
     // Handle modal close
-    this.modalRef.instance.closed.subscribe(() => {
+    this.modalRef.instance.closed?.subscribe(() => {
       this.closeModal();
     });
   }

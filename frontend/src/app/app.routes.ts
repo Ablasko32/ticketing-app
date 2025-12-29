@@ -34,6 +34,10 @@ export const routes: Routes = [
         loadComponent: () => import('./features/add-new/add-new').then((m) => m.AddNew),
       },
       {
+        path: 'tickets',
+        loadComponent: () => import('./features/tickets/tickets').then((m) => m.Tickets),
+      },
+      {
         path: 'user-manager',
         loadComponent: () =>
           import('./features/admin/user-manager/user-manager').then((m) => m.UserManager),

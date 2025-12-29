@@ -6,6 +6,8 @@
         public required string Title { get; set; }
         public required string Description { get; set; }
 
+        public required string OrganizationName { get; set; }
+
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     }
 }

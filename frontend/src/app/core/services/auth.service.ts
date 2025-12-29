@@ -8,23 +8,23 @@ import { catchError, map, switchMap, tap, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `${environment.apiUrl}/auth`;
   public authStatus = signal<IAuthStatus | undefined>(undefined);
 
   private httpClient = inject(HttpClient);
 
   registerAdmin(data: IRegisterData) {
-    return this.httpClient.post<IAuthResponse>(`${this.apiUrl}/auth/register-admin`, data);
+    return this.httpClient.post<IAuthResponse>(`${this.apiUrl}/register-admin`, data);
   }
 
   login(data: ILoginData) {
     return this.httpClient
-      .post<IAuthResponse>(`${this.apiUrl}/auth/login`, data)
+      .post<IAuthResponse>(`${this.apiUrl}/login`, data)
       .pipe(switchMap((val) => this.status().pipe(map(() => val))));
   }
 
   logout() {
-    return this.httpClient.post<IAuthResponse>(`${this.apiUrl}/auth/logout`, {}).pipe(
+    return this.httpClient.post<IAuthResponse>(`${this.apiUrl}/logout`, {}).pipe(
       tap(() => {
         this.authStatus.set(undefined);
       })
@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   status() {
-    return this.httpClient.get<IAuthStatus>(`${this.apiUrl}/auth/status`).pipe(
+    return this.httpClient.get<IAuthStatus>(`${this.apiUrl}/status`).pipe(
       tap((res) => {
         this.authStatus.set(res);
       }),

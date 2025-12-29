@@ -1,10 +1,11 @@
-﻿using ticketing.Models;
+﻿using System.Security.Claims;
+using ticketing.Models;
 
 namespace ticketing.Repositories
 {
     public interface ITicketRepository
     {
-        Task<List<Ticket>> GetAllTicketsAsync();
+        Task<List<Ticket>> GetAllTicketsAsync(ClaimsPrincipal claims);
 
         Task<Ticket> CreateNewTicketAsync(Ticket ticket);
 

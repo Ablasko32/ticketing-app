@@ -1,4 +1,4 @@
-import { Component, inject, viewChild } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { Button } from '../button/button';
 import { ModalService } from '../../../core/services/modal.service';
 import { LucideAngularModule, X } from 'lucide-angular';
@@ -13,16 +13,22 @@ import { LucideAngularModule, X } from 'lucide-angular';
   },
 })
 export class Modal {
+  closed = output<void>();
+
+  close() {
+    this.closed.emit();
+  }
+
   private modalService = inject(ModalService);
   xIcon = X;
 
   closeModal() {
-    this.modalService.closeModal();
+    this.close();
   }
 
   onBackdropClick(e: Event) {
     if (e.target === e.currentTarget) {
-      this.closeModal();
+      this.close();
     }
   }
 }

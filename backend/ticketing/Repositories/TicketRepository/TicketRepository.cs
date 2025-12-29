@@ -1,21 +1,27 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using ticketing.Data;
 using ticketing.Models;
+using ticketing.Repositories.Interface;
 
 namespace ticketing.Repositories;
 
 public class TicketRepository : ITicketRepository
 {
     private readonly ApplicationContext _dbContext;
+    private readonly IAuthRepository _authRepository;
 
-    public TicketRepository(ApplicationContext dbContext)
+    public TicketRepository(ApplicationContext dbContext, IAuthRepository authRepository)
     {
         _dbContext = dbContext;
+        _authRepository = authRepository;
     }
 
-    public async Task<List<Ticket>> GetAllTicketsAsync()
+    public async Task<List<Ticket>> GetAllTicketsAsync(ClaimsPrincipal claims)
     {
-        return await _dbContext.Tickets.ToListAsync();
+        var user = await _authRepository.GetUserAsync(claims);
+
+        return await _dbContext.Tickets.Where(t => t.OrganizationName == user!.OrganizationName).ToListAsync();
     }
 
     public async Task<Ticket> CreateNewTicketAsync(Ticket ticket)

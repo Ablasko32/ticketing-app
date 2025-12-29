@@ -13,7 +13,7 @@ export class UserManagerService {
   private refresh = new Subject<void>();
   refresh$ = this.refresh.asObservable();
 
-  private apiUrl = environment.apiUrl;
+  private apiUrl = `${environment.apiUrl}/auth`;
   private httpClient = inject(HttpClient);
 
   refreshUsers() {
@@ -21,14 +21,14 @@ export class UserManagerService {
   }
 
   getAllUsers() {
-    return this.httpClient.get<IUser[]>(`${this.apiUrl}/auth/all-users`);
+    return this.httpClient.get<IUser[]>(`${this.apiUrl}/all-users`);
   }
 
   registerUser(data: IRegisterUserData) {
-    return this.httpClient.post<IAuthResponse>(`${this.apiUrl}/auth/register-user`, data);
+    return this.httpClient.post<IAuthResponse>(`${this.apiUrl}/register-user`, data);
   }
 
   deleteUser(id: string) {
-    return this.httpClient.delete<IAuthResponse>(`${this.apiUrl}/auth/user/${id}`);
+    return this.httpClient.delete<IAuthResponse>(`${this.apiUrl}/user/${id}`);
   }
 }
