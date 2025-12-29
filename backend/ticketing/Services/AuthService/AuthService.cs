@@ -100,6 +100,11 @@ namespace ticketing.Services
             return _mapper.Map<List<UserDTO>>(users);
         }
 
+        public async Task<IdentityResult> DeleteUserAsync(string userId)
+        {
+            return await _authRepository.DeletUserAsync(userId);
+        }
+
         public async Task LogoutAsync()
         {
             await _authRepository.LogoutAsync();

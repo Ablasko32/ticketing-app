@@ -29,6 +29,6 @@ export class UserManagerService {
   }
 
   deleteUser(id: string) {
-    return this.httpClient.delete(`${this.apiUrl}/auth/delete-user/${id}`);
+    return this.httpClient.delete<IAuthResponse>(`${this.apiUrl}/auth/user/${id}`);
   }
 }

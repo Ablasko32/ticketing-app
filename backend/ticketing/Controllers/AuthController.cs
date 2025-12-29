@@ -116,6 +116,29 @@ namespace ticketing.Controllers
             }
         }
 
+        [Authorize(Roles = UserRoles.Admin)]
+        [HttpDelete("user/{userId}")]
+        public async Task<IActionResult> DeleteUserAsync(string userId)
+        {
+            try
+            {
+                var result = await _authService.DeleteUserAsync(userId);
+                if (result.Succeeded)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return BadRequest(result.Errors);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting user");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
         [HttpGet("status")]
         public IActionResult GetAuthStatus()
         {

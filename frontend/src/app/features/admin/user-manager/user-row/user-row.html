@@ -1,5 +1,5 @@
 <p class="email">{{ userData().email }}</p>
 <p class="date">{{ userData().dateCreated | date : 'dd/MM/yyyy' }}</p>
 <div>
-  <app-button [icon]="trashIcon"></app-button>
+  <app-button [loading]="loading()" (btnClick)="handleDeleteUser()" [icon]="trashIcon"></app-button>
 </div>

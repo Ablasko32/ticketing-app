@@ -71,10 +71,20 @@ namespace ticketing.Repositories
             return await _userManager.GetUserAsync(principal);
         }
 
-
         public async Task<List<AppUser>> GetAllUsersAsync(string organizationName)
         {
-           return await _userManager.Users.Where(u => u.OrganizationName == organizationName).ToListAsync();
+            return await _userManager.Users.Where(u => u.OrganizationName == organizationName).ToListAsync();
+        }
+
+        public async Task<IdentityResult> DeletUserAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return IdentityResult.Failed(new IdentityError { Description = "User not found" });
+            }
+
+            return await _userManager.DeleteAsync(user);
         }
 
         public async Task<bool> IsOrganizationTameTakenAsync(string organizationName)

@@ -1,7 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, input, inject, signal } from '@angular/core';
 import { Button } from '../../../../shared/components/button/button';
 import { LucideAngularModule, Trash } from 'lucide-angular';
 import { DatePipe } from '@angular/common';
+import { UserManagerService } from '../../../../core/services/userManager.service';
+import { ToastService } from '../../../../core/services/toast.service';
 
 @Component({
   selector: 'app-user-row',
@@ -10,6 +12,34 @@ import { DatePipe } from '@angular/common';
   styleUrl: './user-row.css',
 })
 export class UserRow {
+  loading = signal<boolean>(false);
   userData = input.required<any>();
   trashIcon = Trash;
+
+  private userManagerService = inject(UserManagerService);
+  private toastService = inject(ToastService);
+
+  handleDeleteUser() {
+    this.loading.set(true);
+
+    this.userManagerService.deleteUser(this.userData().id).subscribe({
+      next: () => {
+        this.loading.set(false);
+        this.userManagerService.refreshUsers();
+        this.toastService.showToast({
+          title: 'Success',
+          message: 'User deleted successfully',
+          type: 'success',
+        });
+      },
+      error: (error) => {
+        this.loading.set(false);
+        this.toastService.showToast({
+          title: 'Error',
+          message: error.error.message || 'Error deleting user',
+          type: 'error',
+        });
+      },
+    });
+  }
 }

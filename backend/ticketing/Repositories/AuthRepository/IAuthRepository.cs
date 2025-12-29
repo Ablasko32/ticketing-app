@@ -20,5 +20,7 @@ namespace ticketing.Repositories.Interface
         Task<List<AppUser>> GetAllUsersAsync(string organizationName);
 
         Task<AppUser?> GetUserAsync(ClaimsPrincipal principal);
+
+        Task<IdentityResult> DeletUserAsync(string userId);
     }
 }
