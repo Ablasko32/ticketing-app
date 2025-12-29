@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-form-input
+    [disabled]="loading()"
+    id="email"
+    label="Email"
+    type="email"
+    [required]="true"
+    [control]="form.controls.email"
+    errorMessage="Email is required"
+  />
+  <app-form-input
+    [disabled]="loading()"
+    id="password"
+    label="Password"
+    type="password"
+    [required]="true"
+    [control]="form.controls.password"
+    errorMessage="Password is required"
+  />
+  <div class="error-container">
+    @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+    }
+  </div>
+  <app-button [loading]="loading()" size="full" type="submit" text="Add User"></app-button>
+</form>

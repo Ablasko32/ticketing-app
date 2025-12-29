@@ -11,7 +11,9 @@
 } @else {
 <ul>
   @for (user of users(); track user.id) {
-  <app-user-row [userData]="user"></app-user-row>
+  <li>
+    <app-user-row [userData]="user"></app-user-row>
+  </li>
   } @empty {
   <li>
     <p class="fallback-text">No users found. Start by creating your first user.</p>

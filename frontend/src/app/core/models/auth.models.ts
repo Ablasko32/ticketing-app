@@ -6,6 +6,12 @@ export interface IRegisterData {
   organizationName: string;
 }
 
+export interface IRegisterUserData {
+  email: string;
+  password: string;
+  role: TRoles;
+}
+
 export interface ILoginData {
   email: string;
   password: string;

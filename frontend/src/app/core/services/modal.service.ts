@@ -29,10 +29,17 @@ export class ModalService {
 
     const modalElement = this.modalRef.location.nativeElement;
     const contentElement = contentRef.location.nativeElement;
+
+    this.appRef.attachView(contentRef.hostView);
+    this.appRef.attachView(this.modalRef.hostView);
+
+    document.body.appendChild(modalElement);
     modalElement.querySelector('.modal-content')?.appendChild(contentElement);
 
-    this.appRef.attachView(this.modalRef.hostView);
-    document.body.appendChild(modalElement);
+    Promise.resolve().then(() => {
+      contentRef?.changeDetectorRef.detectChanges();
+      this.modalRef?.changeDetectorRef.detectChanges();
+    });
 
     // Handle modal close
     this.modalRef.instance.closed.subscribe(() => {

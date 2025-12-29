@@ -54,7 +54,7 @@ namespace ticketing.Repositories
             {
                 Email = registerUserData.Email,
                 UserName = registerUserData.Email,
-                OrganizationName = organizationName
+                OrganizationName = organizationName,
             };
 
             var result = await _userManager.CreateAsync(user, registerUserData.Password);

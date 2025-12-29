@@ -1,7 +1,5 @@
-<li>
-  <p>{{ userData().email }}</p>
-  <p>{{ userData().createdAt }}</p>
-  <div>
-    <app-button [icon]="trashIcon"></app-button>
-  </div>
-</li>
+<p class="email">{{ userData().email }}</p>
+<p class="date">{{ userData().dateCreated | date : 'dd/MM/yyyy' }}</p>
+<div>
+  <app-button [icon]="trashIcon"></app-button>
+</div>
