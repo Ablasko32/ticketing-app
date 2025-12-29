@@ -1,6 +1,4 @@
-﻿using ticketing.Repositories;
-using ticketing.Repositories.Interface;
-using ticketing.Services.Interface;
+﻿using ticketing.Services.Interface;
 
 namespace ticketing.Services
 {
@@ -9,6 +7,7 @@ namespace ticketing.Services
         public static WebApplicationBuilder MapServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<ITicketService, TicketService>();
 
             return builder;
         }

@@ -1,0 +1,14 @@
+﻿using ticketing.DTOs;
+using ticketing.Models;
+
+namespace ticketing.Services
+{
+    public interface ITicketService
+    {
+        Task<List<TicketDTO>> GetAllTicketsAsync();
+
+        Task<Ticket> CreateNewTicketAsync(CreateTicketDTO newTicket);
+
+        Task<bool> DeleteTicketAsync(int ticketId);
+    }
+}
