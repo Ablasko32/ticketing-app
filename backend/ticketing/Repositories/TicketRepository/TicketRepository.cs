@@ -36,4 +36,16 @@ public class TicketRepository : ITicketRepository
         var result = await _dbContext.Tickets.Where(t => t.Id == ticketId).ExecuteDeleteAsync();
         return result > 0;
     }
+
+    public async Task<bool> UpdateTicketAsync(Ticket ticket)
+    {
+        _dbContext.Tickets.Update(ticket);
+        var rows = await _dbContext.SaveChangesAsync();
+        return rows > 0;
+    }
+
+    public async Task<Ticket?> GetTicketAsync(int ticketId)
+    {
+        return await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == ticketId);
+    }
 }

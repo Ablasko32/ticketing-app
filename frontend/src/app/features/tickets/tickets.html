@@ -18,12 +18,8 @@
       [cdkDropListConnectedTo]="['progress', 'done']"
       class="ticket-list"
     >
-      @for (item of todo(); track item) {
-      <div class="ticket-card" cdkDrag>
-        <h3>{{ item.title }}</h3>
-        <p>{{ item.status }}</p>
-        <p>{{ item.dateCreated }}</p>
-      </div>
+      @for (item of todo(); track item.id) {
+      <app-ticket [ticket]="item" />
       }
     </div>
   </div>
@@ -38,12 +34,8 @@
       [cdkDropListConnectedTo]="['todo', 'done']"
       class="ticket-list"
     >
-      @for (item of progress(); track item) {
-      <div class="ticket-card" cdkDrag>
-        <h3>{{ item.title }}</h3>
-        <p>{{ item.status }}</p>
-        <p>{{ item.dateCreated }}</p>
-      </div>
+      @for (item of progress(); track item.id) {
+      <app-ticket [ticket]="item" />
       }
     </div>
   </div>
@@ -58,12 +50,8 @@
       [cdkDropListConnectedTo]="['todo', 'progress']"
       class="ticket-list"
     >
-      @for (item of done(); track item) {
-      <div class="ticket-card" cdkDrag>
-        <h3>{{ item.title }}</h3>
-        <p>{{ item.status }}</p>
-        <p>{{ item.dateCreated }}</p>
-      </div>
+      @for (item of done(); track item.id) {
+      <app-ticket [ticket]="item" />
       }
     </div>
   </div>

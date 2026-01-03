@@ -40,52 +40,6 @@
   gap: 0.5rem;
 }
 
-.ticket-card {
-  padding: 1.2rem;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-sm);
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 2rem;
-  box-sizing: border-box;
-  cursor: grab;
-  font-size: 1.4rem;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.ticket-card h3 {
-  font-size: 1.6rem;
-  font-weight: 500;
-}
-.ticket-card p {
-  color: var(--text-muted);
-}
-
-.ticket-card:active {
-  cursor: grabbing;
-}
-
-.cdk-drag-preview {
-  box-sizing: border-box;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-lg);
-  background: var(--bg-surface);
-  z-index: 1000;
-}
-
-.cdk-drag-placeholder {
-  opacity: 0.3;
-  background: var(--border-main);
-  border-radius: var(--radius-sm);
-}
-
-.cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
 .ticket-list.cdk-drop-list-dragging .ticket-card:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

@@ -10,5 +10,9 @@ namespace ticketing.Repositories
         Task<Ticket> CreateNewTicketAsync(Ticket ticket);
 
         Task<bool> DeleteTicketAsync(int ticketId);
+
+        Task<bool> UpdateTicketAsync(Ticket ticket);
+
+        Task<Ticket?> GetTicketAsync(int ticketId);
     }
 }

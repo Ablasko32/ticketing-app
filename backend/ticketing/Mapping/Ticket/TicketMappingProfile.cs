@@ -10,5 +10,6 @@ public class TicketMappingProfile:Profile
     {
         CreateMap<Ticket,TicketDTO>();
         CreateMap<CreateTicketDTO, Ticket>();
+        CreateMap<UpdateTicketDTO, Ticket>().ForAllMembers(opt=>opt.Condition((src,dest,srcMember)=>srcMember !=null));
     }
 }

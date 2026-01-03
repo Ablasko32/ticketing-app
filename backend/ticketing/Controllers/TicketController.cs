@@ -74,5 +74,27 @@ namespace ticketing.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
             }
         }
+
+        [HttpPut("{ticketId}")]
+        public async Task<IActionResult> UpdateTicketAsync(int ticketId, [FromBody] UpdateTicketDTO updateDTO)
+        {
+            try
+            {
+                var result = await _ticketService.UpdateTicketAsync(ticketId, updateDTO);
+                if (result)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating ticket");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
     }
 }

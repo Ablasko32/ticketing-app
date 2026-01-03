@@ -3,10 +3,11 @@ import { TicketService } from '../../core/services/ticket.service';
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { ITicket, ITicketStatus } from '../../core/models/ticket.model';
 import { Loader } from '../../shared/components/loader/loader';
+import { Ticket } from './ticket/ticket';
 
 @Component({
   selector: 'app-tickets',
-  imports: [CdkDropList, CdkDrag, Loader],
+  imports: [CdkDropList, CdkDrag, Loader, Ticket],
   templateUrl: './tickets.html',
   styleUrl: './tickets.css',
 })

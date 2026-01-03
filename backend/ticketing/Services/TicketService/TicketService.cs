@@ -13,7 +13,7 @@ namespace ticketing.Services
         private readonly ITicketRepository _ticketRepository;
         private readonly IMapper _mapper;
 
-        public TicketService(IAuthRepository authRepository,  ITicketRepository ticketRepository, IMapper mapper, IHttpContextAccessor httpContextAccesor )
+        public TicketService(IAuthRepository authRepository, ITicketRepository ticketRepository, IMapper mapper, IHttpContextAccessor httpContextAccesor)
         {
             _ticketRepository = ticketRepository;
             _authRepository = authRepository;
@@ -42,6 +42,19 @@ namespace ticketing.Services
         public async Task<bool> DeleteTicketAsync(int ticketId)
         {
             return await _ticketRepository.DeleteTicketAsync(ticketId);
+        }
+
+        public async Task<bool> UpdateTicketAsync(int ticketId, UpdateTicketDTO updateDTO)
+        {
+            var ticket = await _ticketRepository.GetTicketAsync(ticketId);
+            if (ticket == null)
+            {
+                return false;
+            }
+
+            _mapper.Map(updateDTO, ticket);
+
+            return await _ticketRepository.UpdateTicketAsync(ticket);
         }
     }
 }

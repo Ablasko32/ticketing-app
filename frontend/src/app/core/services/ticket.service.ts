@@ -23,10 +23,14 @@ export class TicketService {
   }
 
   createNewTicket(ticket: ITicketCreate) {
-    return this.httpClient.post<ITicket>(this.API_URL, ticket);
+    return this.httpClient.post<void>(this.API_URL, ticket);
   }
 
   updateTicketStatus(ticketId: string, status: ITicketStatus) {
-    return this.httpClient.put<ITicket>(`${this.API_URL}/${ticketId}`, { status });
+    return this.httpClient.put<void>(`${this.API_URL}/${ticketId}`, { status });
+  }
+
+  deleteTicket(ticketId: string) {
+    return this.httpClient.delete<void>(`${this.API_URL}/${ticketId}`);
   }
 }
