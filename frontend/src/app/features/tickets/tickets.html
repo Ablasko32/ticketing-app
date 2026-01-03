@@ -1,1 +1,71 @@
-<p>tickets works!</p>
+@if (loading()) {
+<div class="container">
+  <app-loader />
+</div>
+}@else if(error()){
+<div class="container">
+  <p class="error">{{ error() }}</p>
+</div>
+}@else{
+<div class="ticket-board">
+  <div class="ticket-column">
+    <h2>To do</h2>
+    <div
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      id="todo"
+      [cdkDropListData]="todo()"
+      [cdkDropListConnectedTo]="['progress', 'done']"
+      class="ticket-list"
+    >
+      @for (item of todo(); track item) {
+      <div class="ticket-card" cdkDrag>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.status }}</p>
+        <p>{{ item.dateCreated }}</p>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="ticket-column">
+    <h2>In progress</h2>
+    <div
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      id="progress"
+      [cdkDropListData]="progress()"
+      [cdkDropListConnectedTo]="['todo', 'done']"
+      class="ticket-list"
+    >
+      @for (item of progress(); track item) {
+      <div class="ticket-card" cdkDrag>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.status }}</p>
+        <p>{{ item.dateCreated }}</p>
+      </div>
+      }
+    </div>
+  </div>
+
+  <div class="ticket-column">
+    <h2>Done</h2>
+    <div
+      cdkDropList
+      (cdkDropListDropped)="drop($event)"
+      id="done"
+      [cdkDropListData]="done()"
+      [cdkDropListConnectedTo]="['todo', 'progress']"
+      class="ticket-list"
+    >
+      @for (item of done(); track item) {
+      <div class="ticket-card" cdkDrag>
+        <h3>{{ item.title }}</h3>
+        <p>{{ item.status }}</p>
+        <p>{{ item.dateCreated }}</p>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+}

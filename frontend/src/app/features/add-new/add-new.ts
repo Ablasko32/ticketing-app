@@ -6,6 +6,8 @@ import { FormSelect } from '../../shared/components/form-select/form-select';
 import { TicketPriority } from '../../core/constants/ticket.constants';
 import { BackButton } from '../../shared/components/back-button/back-button';
 import { TicketService } from '../../core/services/ticket.service';
+import { ToastService } from '../../core/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-new',
@@ -21,12 +23,17 @@ export class AddNew {
   ];
 
   form = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-    priority: new FormControl('', [Validators.required]),
+    title: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    description: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    priority: new FormControl<TicketPriority>(TicketPriority.LOW, {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
 
   private ticketService = inject(TicketService);
+  private toastService = inject(ToastService);
+  private router = inject(Router);
 
   handleSubmit() {
     if (this.form.invalid) {
@@ -34,9 +41,27 @@ export class AddNew {
       return;
     }
     const { title, description, priority } = this.form.getRawValue();
-    console.log(title, description, priority);
 
-    // TICKET CREATION
+    this.ticketService.createNewTicket({ title, description, priority }).subscribe({
+      next: () => {
+        this.handleReset();
+        this.ticketService.refreshTickets();
+        this.toastService.showToast({
+          title: 'Ticket created',
+          message: 'Ticket created successfully',
+          type: 'success',
+        });
+        this.router.navigate(['/tickets']);
+      },
+      error: (error) => {
+        this.toastService.showToast({
+          title: 'Ticket creation failed',
+          message: 'Ticket creation failed',
+          type: 'error',
+        });
+        console.error(error);
+      },
+    });
   }
 
   handleReset() {
