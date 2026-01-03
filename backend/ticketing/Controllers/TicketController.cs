@@ -75,6 +75,7 @@ namespace ticketing.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{ticketId}")]
         public async Task<IActionResult> UpdateTicketAsync(int ticketId, [FromBody] UpdateTicketDTO updateDTO)
         {

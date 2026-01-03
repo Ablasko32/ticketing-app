@@ -1,17 +1,21 @@
 <div class="dashboard-container">
   <header class="page-header">
-    <h2 class="page-title">Dashboard Overview</h2>
+    <h2 class="page-title">Overview</h2>
   </header>
 
+  @if (loading()) {
+  <app-loader />
+  } @else if (error()) {
+  <p class="error">{{ error() }}</p>
+  } @else {
   <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-header">
         <span class="stat-title">Total Tickets</span>
-        <span class="stat-icon">📑</span>
+        <span class="stat-icon"><lucide-icon [img]="fileText" [size]="18"></lucide-icon></span>
       </div>
       <div class="stat-body">
-        <span class="stat-value">1,248</span>
-        <span class="stat-trend positive"> <span class="trend-arrow">↑</span> 12% </span>
+        <span class="stat-value">{{ dashboardStats()?.totalTickets }}</span>
       </div>
       <div class="stat-footer">
         <span class="stat-desc">Total tickets in system</span>
@@ -21,11 +25,10 @@
     <div class="stat-card">
       <div class="stat-header">
         <span class="stat-title">Open Tickets</span>
-        <span class="stat-icon">📂</span>
+        <span class="stat-icon"><lucide-icon [img]="folderOpen" [size]="18"></lucide-icon></span>
       </div>
       <div class="stat-body">
-        <span class="stat-value">86</span>
-        <span class="stat-trend neutral"> <span class="trend-arrow">→</span> 0% </span>
+        <span class="stat-value">{{ dashboardStats()?.openTickets }}</span>
       </div>
       <div class="stat-footer">
         <span class="stat-desc">Currently active</span>
@@ -35,29 +38,65 @@
     <div class="stat-card">
       <div class="stat-header">
         <span class="stat-title">Closed Tickets</span>
-        <span class="stat-icon">✅</span>
+        <span class="stat-icon"><lucide-icon [img]="checkCheck" [size]="18"></lucide-icon></span>
       </div>
       <div class="stat-body">
-        <span class="stat-value">1,162</span>
-        <span class="stat-trend positive"> <span class="trend-arrow">↑</span> 8% </span>
+        <span class="stat-value">{{ dashboardStats()?.completedTickets }}</span>
       </div>
       <div class="stat-footer">
-        <span class="stat-desc">Resolved this month</span>
+        <span class="stat-desc">Resolved tickets</span>
       </div>
     </div>
 
     <div class="stat-card">
       <div class="stat-header">
-        <span class="stat-title">Avg Ticket Time</span>
-        <span class="stat-icon">⏱️</span>
+        <span class="stat-title">Completion Rate</span>
+        <span class="stat-icon"><lucide-icon [img]="trendingUp" [size]="18"></lucide-icon></span>
       </div>
       <div class="stat-body">
-        <span class="stat-value">4h 12m</span>
-        <span class="stat-trend negative"> <span class="trend-arrow">↓</span> 5% </span>
+        <span class="stat-value">{{ dashboardStats()?.completionRate }}%</span>
       </div>
       <div class="stat-footer">
-        <span class="stat-desc">Response time avg</span>
+        <span class="stat-desc">Tickets resolved vs total</span>
       </div>
     </div>
   </div>
+
+  <div class="priority-grid">
+    <div class="content-card">
+      <h3 class="card-title">Priority Distribution</h3>
+      <div class="chart-wrapper">
+        @if (priorityChartData()) {
+        <canvas
+          baseChart
+          [data]="priorityChartData()"
+          [options]="priorityChartOptions"
+          [type]="'doughnut'"
+        >
+        </canvas>
+        }
+      </div>
+    </div>
+
+    <div class="content-card critical-card">
+      <div class="critical-header">
+        <h3 class="card-title">Critical Attention</h3>
+        <span class="critical-icon"
+          ><lucide-icon [img]="alertTriangle" [size]="18"></lucide-icon
+        ></span>
+      </div>
+      <div class="critical-body">
+        <span class="critical-value">{{ dashboardStats()?.highPriorityOpen }}</span>
+        <span class="critical-label">High Priority Open</span>
+      </div>
+      <ul>
+        @if (dashboardStats()?.highPriorityOpenTickets) { @for (ticket of
+        dashboardStats()?.highPriorityOpenTickets;track ticket.id) {
+        <li class="ticket-title">{{ ticket.title }}</li>
+        } }
+      </ul>
+      <p class="critical-desc">Requires immediate resolution</p>
+    </div>
+  </div>
+  }
 </div>

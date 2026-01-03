@@ -43,9 +43,6 @@
   --status-resolved-bg: #dcfce7; /* Emerald 100 */
   --status-resolved-text: #15803d; /* Emerald 700 */
 
-  --status-closed-bg: #f1f5f9; /* Slate 100 */
-  --status-closed-text: #475569; /* Slate 600 */
-
   --status-critical-bg: #fee2e2; /* Red 100 */
   --status-critical-text: #b91c1c; /* Red 700 */
 

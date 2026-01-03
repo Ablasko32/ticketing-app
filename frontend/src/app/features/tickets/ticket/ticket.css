@@ -1,17 +1,30 @@
 .ticket-card {
   padding: 1.2rem;
-  background: var(--bg-surface);
   border: 1px solid var(--border-light);
   border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
   align-items: start;
   gap: 2rem;
-  box-sizing: border-box;
   cursor: grab;
   font-size: 1.4rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: var(--shadow-md);
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ticket-card.done {
+  background: var(--status-resolved-bg);
+  color: var(--status-resolved-text);
+}
+
+.ticket-card.progress {
+  background: var(--status-progress-bg);
+  color: var(--status-progress-text);
+}
+
+.ticket-card.todo {
+  background: var(--status-open-bg);
+  color: var(--status-open-text);
 }
 
 header {
