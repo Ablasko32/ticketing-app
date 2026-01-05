@@ -1,12 +1,4 @@
-import {
-  Directive,
-  input,
-  inject,
-  TemplateRef,
-  ViewContainerRef,
-  OnInit,
-  effect,
-} from '@angular/core';
+import { Directive, input, inject, TemplateRef, ViewContainerRef, effect } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { TRoles } from '../../core/models/user.model';
 
