@@ -10,8 +10,9 @@
     Welcome, <span>{{ role() }}</span>
   </p>
   <ul>
-    @for (navItem of roleRoutes(); track $index) {
-    <li (click)="onLinkClick()">
+    @for (navItem of userRoutes; track $index) {
+
+    <li *appRole="navItem.roles" (click)="onLinkClick()">
       <a
         [routerLinkActiveOptions]="{ exact: navItem.path === '' }"
         routerLinkActive="active"
@@ -19,6 +20,7 @@
         >{{ navItem.title }}</a
       >
     </li>
+
     }
     <div class="logout">
       <app-logout-button />

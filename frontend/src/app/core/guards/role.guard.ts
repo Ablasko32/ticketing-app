@@ -1,8 +1,8 @@
-import { CanMatchFn, Router } from '@angular/router';
+import { CanActivateFn, CanMatchFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 
-export const roleGuard: CanMatchFn = (route, segments) => {
+export const roleGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
@@ -18,5 +18,5 @@ export const roleGuard: CanMatchFn = (route, segments) => {
     return true;
   }
 
-  return false;
+  return router.parseUrl('/login');
 };

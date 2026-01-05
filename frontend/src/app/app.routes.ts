@@ -19,10 +19,8 @@ export const routes: Routes = [
     path: 'app',
     loadComponent: () =>
       import('./features/layout/main-layout/main-layout').then((m) => m.MainLayout),
-    canMatch: [authGuard, roleGuard],
-    data: {
-      role: 'admin',
-    },
+    canMatch: [authGuard],
+
     children: [
       {
         path: '',
@@ -39,27 +37,16 @@ export const routes: Routes = [
       },
       {
         path: 'user-manager',
+        canActivate: [roleGuard],
+        data: {
+          role: 'admin',
+        },
         loadComponent: () =>
           import('./features/admin/user-manager/user-manager').then((m) => m.UserManager),
       },
     ],
   },
-  {
-    path: 'app',
-    loadComponent: () => import('./features/user/dashboard/dashboard').then((m) => m.Dashboard),
-    canMatch: [authGuard, roleGuard],
-    data: {
-      role: 'user',
-    },
-  },
-  // {
-  //   path: 'app',
-  //   loadComponent: () => import('./features/agent/dashboard/dashboard').then((m) => m.Dashboard),
-  //   canMatch: [authGuard, roleGuard],
-  //   data: {
-  //     role: 'agent',
-  //   },
-  // },
+
   {
     path: '',
     redirectTo: '/login',
