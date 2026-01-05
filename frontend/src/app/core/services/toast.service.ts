@@ -7,7 +7,7 @@ import { IToast } from '../models/toast.model';
 export class ToastService {
   toasts = signal<IToast[]>([]);
   private readonly MAX_TOASTS = 5;
-  private timeouts = new Map<string, number>();
+  private timeouts = new Map<string, ReturnType<typeof setTimeout>>();
 
   showToast(toastOptions: Omit<IToast, 'id'>) {
     const id = crypto.randomUUID();
