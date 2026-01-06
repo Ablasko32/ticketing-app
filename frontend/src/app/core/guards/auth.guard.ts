@@ -1,11 +1,17 @@
-import { inject } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { CanMatchFn, Route, Router, UrlSegment } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { catchError, map, of } from 'rxjs';
+import { isPlatformServer } from '@angular/common';
 
 export const authGuard: CanMatchFn = (route, segments) => {
   const router = inject(Router);
   const authService = inject(AuthService);
+  const platformId = inject(PLATFORM_ID);
+
+  if (isPlatformServer(platformId)) {
+    return true;
+  }
 
   const redirectUrlTree = router.parseUrl('login');
 

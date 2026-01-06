@@ -1,5 +1,8 @@
-<app-navigation />
+@if (authStatus()?.isAuthenticated) {<app-navigation />
 
 <div class="main-content">
   <router-outlet />
 </div>
+}@else {
+<div class="app-init"></div>
+}
