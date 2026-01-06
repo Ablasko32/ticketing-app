@@ -44,8 +44,19 @@ public class TicketRepository : ITicketRepository
         return rows > 0;
     }
 
-    public async Task<Ticket?> GetTicketAsync(int ticketId)
+    public async Task<Ticket?> GetTicketAsync(int ticketId, bool includeComments = false)
     {
+        if (includeComments)
+        {
+            return await _dbContext.Tickets.Include(t => t.Comments).ThenInclude(t => t.User).FirstOrDefaultAsync(t => t.Id == ticketId);
+        }
         return await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == ticketId);
+    }
+
+    public async Task<TicketComment> CreateTicketCommentAsync(TicketComment ticketComment)
+    {
+        _dbContext.TicketComments.Add(ticketComment);
+        await _dbContext.SaveChangesAsync();
+        return ticketComment;
     }
 }

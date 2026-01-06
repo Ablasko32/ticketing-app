@@ -13,5 +13,6 @@
         public required string Status { get; set; }
 
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public List<TicketComment> Comments { get; set; } = new();
     }
 }

@@ -38,11 +38,11 @@ namespace ticketing.Controllers
 
         [Authorize]
         [HttpGet("{ticketId}")]
-        public async Task<IActionResult> GetTicketAsync(int ticketId)
+        public async Task<IActionResult> GetTicketAsync(int ticketId, [FromQuery] bool includeComments)
         {
             try
             {
-                var ticket = await _ticketService.GetTicketAsync(ticketId);
+                var ticket = await _ticketService.GetTicketAsync(ticketId, includeComments);
                 if (ticket == null)
                 {
                     return NotFound();
@@ -116,6 +116,23 @@ namespace ticketing.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error updating ticket");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("comment")]
+        public async Task<IActionResult> CreateTicketCommentAsync([FromBody] CreateTicketCommentDTO createComment)
+        {
+            try
+            {
+                var result = await _ticketService.CreateTicketCommentAsync(createComment);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error creating ticket ticket comment");
                 return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
             }
         }

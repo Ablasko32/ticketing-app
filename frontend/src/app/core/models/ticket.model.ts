@@ -7,6 +7,14 @@ export interface ITicket {
   dateCreated: string;
   status: ITicketStatus;
   priority: TicketPriority;
+  ticketComments?: ITicketComment[];
+}
+
+export interface ITicketComment {
+  id: number;
+  content: string;
+  createdByUserId: string;
+  dateCreated: string;
 }
 
 export interface ITicketCreate {

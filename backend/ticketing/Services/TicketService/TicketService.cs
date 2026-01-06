@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Security.Claims;
+using AutoMapper;
 using ticketing.DTOs;
 using ticketing.Models;
 using ticketing.Repositories;
@@ -28,9 +29,9 @@ namespace ticketing.Services
             return _mapper.Map<List<TicketDTO>>(tickets);
         }
 
-        public async Task<TicketDTO> GetTicketAsync(int ticketId)
+        public async Task<TicketDTO> GetTicketAsync(int ticketId, bool includeComments = false)
         {
-            var ticket = await _ticketRepository.GetTicketAsync(ticketId);
+            var ticket = await _ticketRepository.GetTicketAsync(ticketId, includeComments);
             return _mapper.Map<TicketDTO>(ticket);
         }
 
@@ -52,7 +53,7 @@ namespace ticketing.Services
 
         public async Task<bool> UpdateTicketAsync(int ticketId, UpdateTicketDTO updateDTO)
         {
-            var ticket = await _ticketRepository.GetTicketAsync(ticketId);
+            var ticket = await _ticketRepository.GetTicketAsync(ticketId, false);
             if (ticket == null)
             {
                 return false;
@@ -61,6 +62,15 @@ namespace ticketing.Services
             _mapper.Map(updateDTO, ticket);
 
             return await _ticketRepository.UpdateTicketAsync(ticket);
+        }
+
+        public async Task<TicketCommentDTO> CreateTicketCommentAsync(CreateTicketCommentDTO ticketCommentDTO)
+        {
+            var claims = _httpContextAccesor?.HttpContext?.User;
+            var ticketComment = _mapper.Map<TicketComment>(ticketCommentDTO);
+            ticketComment.CreatedByUserId = claims.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var createdTicketComment = await _ticketRepository.CreateTicketCommentAsync(ticketComment);
+            return _mapper.Map<TicketCommentDTO>(createdTicketComment);
         }
     }
 }

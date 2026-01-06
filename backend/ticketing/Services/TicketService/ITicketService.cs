@@ -13,6 +13,8 @@ namespace ticketing.Services
 
         Task<bool> UpdateTicketAsync(int ticketId, UpdateTicketDTO updateDTO);
 
-        Task<TicketDTO> GetTicketAsync(int ticketId);
+        Task<TicketDTO> GetTicketAsync(int ticketId, bool includeComments);
+
+        Task<TicketCommentDTO> CreateTicketCommentAsync(CreateTicketCommentDTO ticketCommentDTO);
     }
 }

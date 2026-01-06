@@ -22,6 +22,7 @@ export const routes: Route[] = [
     resolve: {
       ticketData: ticketResolver,
     },
+    runGuardsAndResolvers: 'always',
     title: ticketTitleResolver,
   },
   {

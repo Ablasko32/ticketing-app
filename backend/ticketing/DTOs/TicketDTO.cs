@@ -8,5 +8,7 @@
         public required string Priority { get; set; }
         public required string Status { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+
+        public List<TicketCommentDTO>? TicketComments { get;set; }
     }
 }

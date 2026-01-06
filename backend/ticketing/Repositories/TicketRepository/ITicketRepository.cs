@@ -13,6 +13,8 @@ namespace ticketing.Repositories
 
         Task<bool> UpdateTicketAsync(Ticket ticket);
 
-        Task<Ticket?> GetTicketAsync(int ticketId);
+        Task<Ticket?> GetTicketAsync(int ticketId,bool includeComments);
+
+        Task<TicketComment> CreateTicketCommentAsync(TicketComment ticketComment);
     }
 }

@@ -8,9 +8,19 @@ namespace ticketing.Data
 
     {
         public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<TicketComment> TicketComments { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<TicketComment>().HasOne(c => c.Ticket)
+                                            .WithMany(t => t.Comments)
+                                            .HasForeignKey(c => c.TicketId)
+                                            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
