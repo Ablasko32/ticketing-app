@@ -2,11 +2,7 @@
   <header>
     <h3>{{ ticket().title }}</h3>
 
-    <div class="priority-flames">
-      @for (i of [1, 2, 3]; track i) { @if (i <= priorityIndicator()) {
-      <lucide-icon [img]="flame" color="red" [size]="16"></lucide-icon>
-      } }
-    </div>
+    <app-priority-flames [priority]="ticket().priority" />
     <app-button size="sm" [loading]="loading()" [icon]="trash" (click)="onDelete(ticket().id)" />
   </header>
   <p>{{ ticket().description }}</p>

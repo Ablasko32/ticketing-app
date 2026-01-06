@@ -4,10 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BackButton } from '../../shared/components/back-button/back-button';
 import { DatePipe } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
+import { PriorityFlames } from '../tickets/ticket/priority-flames/priority-flames';
 
 @Component({
   selector: 'app-ticket',
-  imports: [BackButton, DatePipe],
+  imports: [BackButton, DatePipe, LucideAngularModule, PriorityFlames],
   templateUrl: './ticket.html',
   styleUrl: './ticket.css',
 })

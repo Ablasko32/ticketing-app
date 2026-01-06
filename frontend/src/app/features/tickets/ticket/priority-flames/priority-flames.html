@@ -1,0 +1,5 @@
+<div class="priority-flames">
+  @for (i of [1, 2, 3]; track i) { @if (i <= priorityIndicator()) {
+  <lucide-icon [img]="flameIcon" color="red" [size]="16"></lucide-icon>
+  } }
+</div>

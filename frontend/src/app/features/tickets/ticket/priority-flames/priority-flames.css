@@ -1,0 +1,6 @@
+.priority-flames {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-bottom: 2rem;
+}

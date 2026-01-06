@@ -1,0 +1,17 @@
+.ticket-container {
+  padding: 2rem;
+}
+
+.ticket-title {
+  text-transform: capitalize;
+}
+
+.ticket-date {
+  font-size: 1.4rem;
+  margin-left: 2rem;
+}
+
+h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}

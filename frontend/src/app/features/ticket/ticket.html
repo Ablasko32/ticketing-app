@@ -1,4 +1,13 @@
-<app-back-button />
-<h2>{{ ticketData().title }}</h2>
-<p>{{ ticketData().description }}</p>
-<p>{{ ticketData().dateCreated | date : 'dd/MM/yyyy' }}</p>
+<div class="ticket-container">
+  <app-back-button />
+  <header class="page-header">
+    <h2 class="page-title">
+      Ticket overview: <span class="ticket-title">{{ ticketData().title }}</span>
+      <span class="ticket-date">/{{ ticketData().dateCreated | date : 'dd/MM/yyyy' }} </span>
+    </h2>
+  </header>
+  <h3>Priority</h3>
+  <app-priority-flames [priority]="ticketData().priority" />
+  <h3>Description</h3>
+  <p>{{ ticketData().description }}</p>
+</div>
