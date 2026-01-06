@@ -12,5 +12,7 @@ namespace ticketing.Services
         Task<bool> DeleteTicketAsync(int ticketId);
 
         Task<bool> UpdateTicketAsync(int ticketId, UpdateTicketDTO updateDTO);
+
+        Task<TicketDTO> GetTicketAsync(int ticketId);
     }
 }

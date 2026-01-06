@@ -1,1 +1,4 @@
-<p>ticket works!</p>
+<app-back-button />
+<h2>{{ ticketData().title }}</h2>
+<p>{{ ticketData().description }}</p>
+<p>{{ ticketData().dateCreated | date : 'dd/MM/yyyy' }}</p>

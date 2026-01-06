@@ -37,6 +37,28 @@ namespace ticketing.Controllers
         }
 
         [Authorize]
+        [HttpGet("{ticketId}")]
+        public async Task<IActionResult> GetTicketAsync(int ticketId)
+        {
+            try
+            {
+                var ticket = await _ticketService.GetTicketAsync(ticketId);
+                if (ticket == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(ticket);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
+        [Authorize]
         [HttpPost("")]
         public async Task<IActionResult> CreateNewTicketAsync([FromBody] CreateTicketDTO ticket)
         {

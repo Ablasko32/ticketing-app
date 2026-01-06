@@ -1,6 +1,7 @@
 <div class="ticket-card {{ ticket().status }}" cdkDrag>
   <header>
     <h3>{{ ticket().title }}</h3>
+
     <div class="priority-flames">
       @for (i of [1, 2, 3]; track i) { @if (i <= priorityIndicator()) {
       <lucide-icon [img]="flame" color="red" [size]="16"></lucide-icon>
@@ -10,4 +11,7 @@
   </header>
   <p>{{ ticket().description }}</p>
   <p>{{ ticket().dateCreated | date : 'dd/MM/yyyy' }}</p>
+  <a [routerLink]="['/app/ticket', ticket().id]">
+    <app-button text="Open" />
+  </a>
 </div>

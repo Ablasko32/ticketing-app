@@ -7,10 +7,11 @@ import { DatePipe } from '@angular/common';
 import { Button } from '../../../shared/components/button/button';
 import { TicketService } from '../../../core/services/ticket.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-ticket',
-  imports: [CdkDrag, LucideAngularModule, DatePipe, Button],
+  imports: [CdkDrag, LucideAngularModule, DatePipe, Button, RouterLink],
   templateUrl: './ticket.html',
   styleUrl: './ticket.css',
 })

@@ -1,5 +1,6 @@
 import { Route } from '@angular/router';
 import { roleGuard } from './core/guards/role.guard';
+import { ticketResolver } from './features/ticket/ticket.resolver';
 
 export const routes: Route[] = [
   {
@@ -17,6 +18,9 @@ export const routes: Route[] = [
   {
     path: 'ticket/:id',
     loadComponent: () => import('./features/ticket/ticket').then((m) => m.Ticket),
+    resolve: {
+      ticketData: ticketResolver,
+    },
   },
   {
     path: 'user-manager',

@@ -28,6 +28,12 @@ namespace ticketing.Services
             return _mapper.Map<List<TicketDTO>>(tickets);
         }
 
+        public async Task<TicketDTO> GetTicketAsync(int ticketId)
+        {
+            var ticket = await _ticketRepository.GetTicketAsync(ticketId);
+            return _mapper.Map<TicketDTO>(ticket);
+        }
+
         public async Task<Ticket> CreateNewTicketAsync(CreateTicketDTO newTicket)
         {
             var claims = _httpContextAccesor.HttpContext!.User;

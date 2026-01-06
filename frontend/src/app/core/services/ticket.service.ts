@@ -22,6 +22,10 @@ export class TicketService {
     return this.httpClient.get<ITicket[]>(this.API_URL);
   }
 
+  getTicket(ticketId: string) {
+    return this.httpClient.get<ITicket>(`${this.API_URL}/${ticketId}`);
+  }
+
   createNewTicket(ticket: ITicketCreate) {
     return this.httpClient.post<void>(this.API_URL, ticket);
   }
