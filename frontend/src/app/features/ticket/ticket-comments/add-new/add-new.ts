@@ -3,9 +3,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FormInput } from '../../../../shared/components/form-input/form-input';
 import { Button } from '../../../../shared/components/button/button';
 import { TicketService } from '../../../../core/services/ticket.service';
-import { ActivatedRoute } from '@angular/router';
 import { ToastService } from '../../../../core/services/toast.service';
 import { ModalService } from '../../../../core/services/modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-new',
@@ -22,9 +22,9 @@ export class AddNew {
   loading = signal(false);
 
   private ticketService = inject(TicketService);
-  private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
   private modalService = inject(ModalService);
+  private router = inject(Router);
 
   onSubmit() {
     if (this.form.invalid) {
@@ -43,6 +43,7 @@ export class AddNew {
           message: 'Comment has succesfully been posted',
         });
         this.modalService.closeModal();
+        this.router.navigate([]);
       },
       error: () => {
         this.toastService.showToast({

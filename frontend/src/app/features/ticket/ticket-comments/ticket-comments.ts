@@ -5,6 +5,7 @@ import { Button } from '../../../shared/components/button/button';
 import { LucideAngularModule, Trash } from 'lucide-angular';
 import { TicketService } from '../../../core/services/ticket.service';
 import { ToastService } from '../../../core/services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ticket-comments',
@@ -19,6 +20,7 @@ export class TicketComments {
 
   private ticketService = inject(TicketService);
   private toastService = inject(ToastService);
+  private routerService = inject(Router);
 
   handleDelete(commentId: number) {
     this.loading.set(true);
@@ -29,6 +31,7 @@ export class TicketComments {
           title: 'Comment deleted',
           message: 'Comment has succesfully been deleted',
         });
+        this.routerService.navigate([]);
       },
       error: () => {
         this.toastService.showToast({
