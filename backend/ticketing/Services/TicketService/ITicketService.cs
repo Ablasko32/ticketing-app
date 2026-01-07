@@ -16,5 +16,7 @@ namespace ticketing.Services
         Task<TicketDTO> GetTicketAsync(int ticketId, bool includeComments);
 
         Task<TicketCommentDTO> CreateTicketCommentAsync(CreateTicketCommentDTO ticketCommentDTO);
+
+        Task<bool> DeleteTicketCommentAsync(int commentId);
     }
 }

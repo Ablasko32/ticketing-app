@@ -40,7 +40,7 @@ const routes: { path: string; title: string; roles: TRoles[] }[] = [
   {
     path: 'new',
     title: 'Create New',
-    roles: ['user', 'admin'],
+    roles: ['admin'],
   },
   {
     path: 'tickets',

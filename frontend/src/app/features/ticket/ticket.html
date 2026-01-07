@@ -10,4 +10,12 @@
   <app-priority-flames [priority]="ticketData().priority" />
   <h3>Description</h3>
   <p>{{ ticketData().description }}</p>
+
+  <div class="comments">
+    <h3>
+      Comments: <span>{{ ticketData().ticketComments?.length }}</span>
+    </h3>
+    <app-button (btnClick)="handleOpenModal()" [icon]="plusIcon" text="Add New" />
+    <app-ticket-comments [ticketData]="ticketData()" />
+  </div>
 </div>

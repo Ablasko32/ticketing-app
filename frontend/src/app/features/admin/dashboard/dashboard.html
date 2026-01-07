@@ -92,7 +92,9 @@
       <ul>
         @if (dashboardStats()?.highPriorityOpenTickets) { @for (ticket of
         dashboardStats()?.highPriorityOpenTickets;track ticket.id) {
-        <li class="ticket-title">{{ ticket.title }}</li>
+        <li class="ticket-title">
+          <a [routerLink]="['/app/ticket', ticket.id]">{{ ticket.title }}</a>
+        </li>
         } }
       </ul>
       <p class="critical-desc">Requires immediate resolution</p>

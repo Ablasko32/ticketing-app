@@ -10,6 +10,10 @@ export const routes: Route[] = [
   },
   {
     path: 'new',
+    data: {
+      role: 'admin',
+    },
+    canActivate: [roleGuard],
     loadComponent: () => import('../../features/add-new/add-new').then((m) => m.AddNew),
   },
   {

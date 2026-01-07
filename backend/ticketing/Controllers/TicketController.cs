@@ -58,7 +58,7 @@ namespace ticketing.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = UserRoles.Admin)]
         [HttpPost("")]
         public async Task<IActionResult> CreateNewTicketAsync([FromBody] CreateTicketDTO ticket)
         {
@@ -132,7 +132,30 @@ namespace ticketing.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating ticket ticket comment");
+                _logger.LogError(ex, "Error creating ticket comment");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("comment/{commentId}")]
+        public async Task<IActionResult> DeleteTicketCommentAsync(int commentId)
+        {
+            try
+            {
+                var result = await _ticketService.DeleteTicketCommentAsync(commentId);
+                if (result)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting ticket comment");
                 return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
             }
         }

@@ -9,7 +9,7 @@
 }@else{
 <div class="ticket-board">
   <div class="ticket-column">
-    <h2>To do</h2>
+    <h2 class="ticket-title todo">To do</h2>
     <div
       cdkDropList
       (cdkDropListDropped)="drop($event)"
@@ -25,7 +25,7 @@
   </div>
 
   <div class="ticket-column">
-    <h2>In progress</h2>
+    <h2 class="ticket-title progress">In progress</h2>
     <div
       cdkDropList
       (cdkDropListDropped)="drop($event)"
@@ -41,7 +41,7 @@
   </div>
 
   <div class="ticket-column">
-    <h2>Done</h2>
+    <h2 class="ticket-title done">Done</h2>
     <div
       cdkDropList
       (cdkDropListDropped)="drop($event)"

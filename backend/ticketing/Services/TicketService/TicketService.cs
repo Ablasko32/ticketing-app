@@ -72,5 +72,10 @@ namespace ticketing.Services
             var createdTicketComment = await _ticketRepository.CreateTicketCommentAsync(ticketComment);
             return _mapper.Map<TicketCommentDTO>(createdTicketComment);
         }
+
+        public async Task<bool> DeleteTicketCommentAsync(int commentId)
+        {
+            return await _ticketRepository.DeleteTicketCommentAsync(commentId);
+        }
     }
 }

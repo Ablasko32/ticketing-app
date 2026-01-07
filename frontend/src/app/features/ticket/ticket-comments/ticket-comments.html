@@ -1,0 +1,12 @@
+<ul class="comment-list">
+  @for (comment of ticketData().ticketComments; track comment.id) {
+  <li class="comment-row">
+    <div class="comment-header">
+      <p class="comment-created">{{ comment.username }}</p>
+      <p class="comment-date">{{ comment.dateCreated | date : 'dd/MM/yyyy HH:mm' }}</p>
+      <app-button [disabled]="loading()" (btnClick)="handleDelete(comment.id)" [icon]="trashIcon" />
+    </div>
+    <p class="comment-content">{{ comment.content }}</p>
+  </li>
+  }
+</ul>

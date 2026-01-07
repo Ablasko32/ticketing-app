@@ -1,0 +1,10 @@
+<form (ngSubmit)="onSubmit()" [formGroup]="form">
+  <app-form-input
+    [control]="form.controls.content"
+    errorMessage="Comment content is required"
+    id="content"
+    label="Content"
+    [disabled]="loading()"
+  />
+  <app-button [loading]="loading()" type="submit" text="Add" />
+</form>

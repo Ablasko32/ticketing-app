@@ -12,10 +12,11 @@ import {
   TrendingUp,
   AlertTriangle,
 } from 'lucide-angular';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Loader, BaseChartDirective, LucideAngularModule],
+  imports: [Loader, BaseChartDirective, LucideAngularModule, RouterLink],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })

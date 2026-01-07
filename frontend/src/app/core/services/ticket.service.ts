@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
-import { ITicketCreate, ITicket, ITicketStatus } from '../models/ticket.model';
+import { ITicketCreate, ITicket, ITicketStatus, ITicketComment } from '../models/ticket.model';
 import { environment } from '../../enviroments/enviroment';
 
 @Injectable({
@@ -38,5 +38,13 @@ export class TicketService {
 
   deleteTicket(ticketId: string) {
     return this.httpClient.delete<void>(`${this.API_URL}/${ticketId}`);
+  }
+
+  //Ticket Comments
+  createTicketComment(content: string, ticketId: string) {
+    return this.httpClient.post<ITicketComment>(`${this.API_URL}/comment`, { content, ticketId });
+  }
+  deleteTicketComment(commentId: number) {
+    return this.httpClient.delete<void>(`${this.API_URL}/comment/${commentId.toString()}`);
   }
 }

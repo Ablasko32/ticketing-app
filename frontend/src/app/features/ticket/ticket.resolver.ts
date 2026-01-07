@@ -17,7 +17,7 @@ export const ticketResolver: ResolveFn<ITicket> = (
     return EMPTY;
   }
 
-  return ticketService.getTicket(ticketId);
+  return ticketService.getTicket(ticketId, true);
 };
 
 export const ticketTitleResolver: ResolveFn<string> = (activatedRoute, state) => {
@@ -27,5 +27,5 @@ export const ticketTitleResolver: ResolveFn<string> = (activatedRoute, state) =>
     return EMPTY;
   }
 
-  return ticketService.getTicket(ticketId, true).pipe(map((t) => `Ticket | ${t.title}`));
+  return ticketService.getTicket(ticketId).pipe(map((t) => `Ticket | ${t.title}`));
 };

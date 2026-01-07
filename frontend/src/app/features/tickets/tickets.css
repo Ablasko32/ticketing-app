@@ -21,6 +21,26 @@
   gap: 1rem;
 }
 
+.ticket-title {
+  text-align: center;
+  padding: 0.8rem;
+}
+
+.ticket-title.done {
+  background: var(--status-resolved-bg);
+  color: var(--status-resolved-text);
+}
+
+.ticket-title.progress {
+  background: var(--status-progress-bg);
+  color: var(--status-progress-text);
+}
+
+.ticket-title.todo {
+  background: var(--status-open-bg);
+  color: var(--status-open-text);
+}
+
 .ticket-column h2 {
   font-size: 1.8rem;
   font-weight: 600;

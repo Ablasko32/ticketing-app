@@ -15,6 +15,7 @@ export interface ITicketComment {
   content: string;
   createdByUserId: string;
   dateCreated: string;
+  username: string;
 }
 
 export interface ITicketCreate {

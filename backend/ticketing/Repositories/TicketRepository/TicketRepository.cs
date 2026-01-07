@@ -59,4 +59,11 @@ public class TicketRepository : ITicketRepository
         await _dbContext.SaveChangesAsync();
         return ticketComment;
     }
+
+    public async Task<bool> DeleteTicketCommentAsync(int commentId)
+    {
+        var result = await _dbContext.TicketComments.Where(tc => tc.Id == commentId).ExecuteDeleteAsync();
+
+        return result > 0;
+    }
 }

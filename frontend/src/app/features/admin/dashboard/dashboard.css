@@ -194,4 +194,10 @@
   font-size: 1.6rem;
   text-transform: capitalize;
   font-weight: 600;
+  transition: color 0.3s;
+  text-decoration: underline;
+}
+
+.ticket-title:hover {
+  color: var(--primary);
 }

@@ -16,7 +16,7 @@ export class ModalService {
   private appRef = inject(ApplicationRef);
   private injector = inject(EnvironmentInjector);
 
-  setOpen(component: any) {
+  setOpen(component: any, data?: any) {
     this.closeModal();
 
     this.modalRef = createComponent(Modal, {
@@ -26,6 +26,10 @@ export class ModalService {
     const contentRef = createComponent(component, {
       environmentInjector: this.injector,
     });
+
+    if (data) {
+      Object.assign(contentRef.instance as any, data);
+    }
 
     const modalElement = this.modalRef.location.nativeElement;
     const contentElement = contentRef.location.nativeElement;
