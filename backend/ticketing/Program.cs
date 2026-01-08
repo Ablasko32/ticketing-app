@@ -1,4 +1,3 @@
-using System.Reflection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ticketing.Data;
@@ -79,6 +78,9 @@ builder.MapServices();
 // Building
 
 var app = builder.Build();
+
+// Static folder
+app.UseStaticFiles();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

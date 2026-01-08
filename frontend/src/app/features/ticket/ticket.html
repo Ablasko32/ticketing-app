@@ -17,9 +17,30 @@
   </h3>
   <div>
     @for (media of ticketData().mediaEntries; track media.id) {
+    <div class="ticket-media-row">
+      <p>{{ media.relativePath }}</p>
+      @if (isViwableFileType(media.relativePath)) {
+      <app-button
+        (btnClick)="openFile(media.relativePath)"
+        [icon]="eyeIcon"
+        [variant]="'secondary'"
+      />
+      }@else {
+      <app-button
+        [loading]="loading()"
+        (btnClick)="downloadFile(media.relativePath)"
+        [icon]="downloadIcon"
+        [variant]="'secondary'"
+      />
+      }
 
-    <p>{{ media.relativePath }}</p>
-
+      <app-button
+        (btnClick)="handleDeleteFile(media.id)"
+        [loading]="loading()"
+        [icon]="trashIcon"
+        [variant]="'secondary'"
+      />
+    </div>
     }
   </div>
 

@@ -57,4 +57,9 @@ export class TicketService {
   deleteTicketComment(commentId: number) {
     return this.httpClient.delete<void>(`${this.API_URL}/comment/${commentId.toString()}`);
   }
+
+  // Ticket media
+  deleteTicketMediaFile(mediaId: number) {
+    return this.httpClient.delete<void>(`${this.API_URL}/media/${mediaId.toString()}`);
+  }
 }

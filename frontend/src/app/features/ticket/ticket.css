@@ -19,3 +19,9 @@ h3 {
 .comments {
   margin-top: 8rem;
 }
+
+.ticket-media-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

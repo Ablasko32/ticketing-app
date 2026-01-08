@@ -13,11 +13,13 @@ namespace ticketing.Controllers
     {
         private readonly ITicketService _ticketService;
         private readonly ILogger<TicketController> _logger;
+        private readonly IFileStorageService _fileStorageService;
 
-        public TicketController(ITicketService ticketService, ILogger<TicketController> logger)
+        public TicketController(ITicketService ticketService, ILogger<TicketController> logger, IFileStorageService fileStorageService)
         {
             _logger = logger;
             _ticketService = ticketService;
+            _fileStorageService = fileStorageService;
         }
 
         [Authorize]
@@ -157,6 +159,29 @@ namespace ticketing.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error deleting ticket comment");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
+        [Authorize]
+        [HttpDelete("media/{mediaId}")]
+        public async Task<IActionResult> DeleteTicketMediaFileAsync(int mediaId)
+        {
+            try
+            {
+                var result = await _fileStorageService.DeleteFileAsync(mediaId);
+                if (result)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting ticket media");
                 return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
             }
         }
