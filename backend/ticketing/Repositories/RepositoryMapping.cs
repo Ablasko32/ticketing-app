@@ -1,5 +1,4 @@
-﻿using ticketing.Repositories;
-using ticketing.Repositories.Interface;
+﻿using ticketing.Repositories.Interface;
 
 namespace ticketing.Repositories
 {
@@ -10,6 +9,7 @@ namespace ticketing.Repositories
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
             builder.Services.AddScoped<ITicketRepository, TicketRepository>();
             builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+            builder.Services.AddScoped<IMediaEntryRepository, MediaEntryRepository>();
 
             return builder;
         }

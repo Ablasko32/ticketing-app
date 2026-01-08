@@ -7,7 +7,7 @@ namespace ticketing.DTOs
     {
         public bool IsAuthenticated { get; set; }
 
-        [AllowedValues(UserRoles.Admin, UserRoles.Agent, UserRoles.User, ErrorMessage = "Only valid roles are allowed")]
+        [AllowedValues(UserRoles.Admin, UserRoles.User, ErrorMessage = "Only valid roles are allowed")]
         public string? Role { get; set; }
 
         public string? Email { get; set; }

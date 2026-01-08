@@ -1,0 +1,28 @@
+<div
+  [class.disabled]="disabled()"
+  class="drop-zone"
+  (dragover)="$event.preventDefault()"
+  (drop)="handleDrop($event)"
+>
+  <lucide-angular class="plus-icon" [img]="plusIcon" [size]="24"></lucide-angular>
+</div>
+
+<div>
+  @for (file of fileList(); track file.id) {
+  <div class="dropped-file">
+    <p>{{ file.file.name }}</p>
+    <app-button (btnClick)="handleRemoveFile(file.id)" [icon]="trashIcon" />
+  </div>
+  }
+</div>
+
+<label [class.disabled]="disabled()" for="file" class="file-label">Add File</label>
+<input
+  multiple="true"
+  [disabled]="disabled()"
+  (change)="onFileChanged($event)"
+  [accept]="getAcceptedFileInputs()"
+  id="file"
+  class="file-input"
+  type="file"
+/>

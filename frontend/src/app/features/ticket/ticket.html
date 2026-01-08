@@ -11,6 +11,18 @@
   <h3>Description</h3>
   <p>{{ ticketData().description }}</p>
 
+  <!-- MEDIA -->
+  <h3>
+    Ticket Files <span>{{ ticketData().mediaEntries?.length }}</span>
+  </h3>
+  <div>
+    @for (media of ticketData().mediaEntries; track media.id) {
+
+    <p>{{ media.relativePath }}</p>
+
+    }
+  </div>
+
   <div class="comments">
     <h3>
       Comments: <span>{{ ticketData().ticketComments?.length }}</span>

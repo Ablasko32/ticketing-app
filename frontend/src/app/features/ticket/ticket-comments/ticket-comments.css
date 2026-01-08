@@ -1,9 +1,14 @@
 .comment-list {
-  width: 100%;
+  max-width: 60rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-top: 2rem;
+  max-height: 40rem;
+  overflow-y: scroll;
+  padding: 2rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
 }
 
 .comment-row {
@@ -12,7 +17,7 @@
   padding: 10px;
   box-shadow: var(--shadow-md);
   background-color: var(--bg-surface);
-  max-width: 60rem;
+
   width: 100%;
   border-radius: var(--radius-md);
 }

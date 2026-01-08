@@ -2,10 +2,9 @@
 {
     public class UserRoles
     {
-        public const string Admin = "admin";
         public const string User = "user";
-        public const string Agent = "agent";
+        public const string Admin = "admin";
 
-        public static readonly string[] All = { Admin, User, Agent };
+        public static readonly string[] All = { User, Admin };
     }
 }

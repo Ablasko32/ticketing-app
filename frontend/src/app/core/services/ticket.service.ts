@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ITicketCreate, ITicket, ITicketStatus, ITicketComment } from '../models/ticket.model';
 import { environment } from '../../enviroments/enviroment';
+import { IFile } from '../../shared/components/file-drop-zone/file-drop-zone';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,16 @@ export class TicketService {
   }
 
   createNewTicket(ticket: ITicketCreate) {
-    return this.httpClient.post<void>(this.API_URL, ticket);
+    const formData = new FormData();
+    formData.append('title', ticket.title);
+    formData.append('description', ticket.description);
+    formData.append('priority', ticket.priority);
+    if (ticket.ticketFiles && ticket.ticketFiles.length > 0) {
+      ticket.ticketFiles.forEach((f) => {
+        formData.append('ticketFiles', f.file);
+      });
+    }
+    return this.httpClient.post<void>(this.API_URL, formData);
   }
 
   updateTicketStatus(ticketId: string, status: ITicketStatus) {

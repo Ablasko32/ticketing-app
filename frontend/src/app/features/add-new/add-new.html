@@ -26,6 +26,8 @@
     valueKey="value"
   ></app-form-select>
 
+  <app-file-drop-zone [control]="form.controls.ticketFiles" />
+
   <div class="actions">
     <app-button type="submit" text="Save" />
     <app-button (btnClick)="handleReset()" variant="secondary" type="button" text="Reset" />

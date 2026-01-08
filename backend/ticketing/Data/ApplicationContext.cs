@@ -9,6 +9,7 @@ namespace ticketing.Data
     {
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<TicketComment> TicketComments { get; set; }
+        public DbSet<MediaEntry> MediaEntries { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
@@ -21,6 +22,11 @@ namespace ticketing.Data
                                             .WithMany(t => t.Comments)
                                             .HasForeignKey(c => c.TicketId)
                                             .OnDelete(DeleteBehavior.Cascade);
+            builder.Entity<MediaEntry>().HasOne<Ticket>()
+                                        .WithMany(t => t.MediaEntries)
+                                        .HasForeignKey(m=>m.TicketId)
+                                        .OnDelete(DeleteBehavior.Cascade);
         }
+
     }
 }

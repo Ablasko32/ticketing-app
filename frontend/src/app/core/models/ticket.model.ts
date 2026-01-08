@@ -1,3 +1,4 @@
+import { IFile } from '../../shared/components/file-drop-zone/file-drop-zone';
 import { TicketPriority } from '../constants/ticket.constants';
 
 export interface ITicket {
@@ -8,6 +9,7 @@ export interface ITicket {
   status: ITicketStatus;
   priority: TicketPriority;
   ticketComments?: ITicketComment[];
+  mediaEntries?: ITicketMedia[];
 }
 
 export interface ITicketComment {
@@ -18,10 +20,17 @@ export interface ITicketComment {
   username: string;
 }
 
+export interface ITicketMedia {
+  id: string;
+  relativePath: string;
+  dateCreated: string;
+}
+
 export interface ITicketCreate {
   title: string;
   description: string;
   priority: TicketPriority;
+  ticketFiles: IFile[];
 }
 
 export type ITicketStatus = 'todo' | 'progress' | 'done';

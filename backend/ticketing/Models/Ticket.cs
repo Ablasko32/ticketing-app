@@ -14,5 +14,7 @@
 
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public List<TicketComment> Comments { get; set; } = new();
+
+        public List<MediaEntry> MediaEntries { get; set; } = new();
     }
 }

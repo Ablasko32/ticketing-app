@@ -14,7 +14,7 @@ namespace ticketing.DTOs
         public required string Password { get; set; }
 
         [Required(ErrorMessage = "Role is required")]
-        [AllowedValues(UserRoles.User, UserRoles.Agent, ErrorMessage = "Role must be either 'user' or 'agent'")]
+        [AllowedValues(UserRoles.User, ErrorMessage = "Role must be 'user'")]
         public required string Role { get; set; }
     }
 }

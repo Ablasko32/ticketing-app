@@ -1,0 +1,50 @@
+.drop-zone {
+  background-color: var(--bg-surface);
+  height: 12rem;
+  max-width: 46rem;
+  width: 100%;
+  border: 1px dashed var(--border-main);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.disabled {
+  opacity: 70%;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-label {
+  background-color: var(--primary);
+  color: var(--on-primary);
+  padding: 1rem 2rem;
+  margin-top: 0.5rem;
+  max-width: 46rem;
+
+  display: block;
+  border-radius: var(--radius-md);
+  text-align: center;
+  cursor: pointer;
+}
+
+.plus-icon {
+  color: var(--primary);
+}
+
+.dropped-file {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 46rem;
+  margin: 1rem 0;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.dropped-file p {
+  font-size: 1.2rem;
+}

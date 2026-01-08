@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using ticketing.Constants;
 using ticketing.DTOs;
 using ticketing.Models;
 using ticketing.Repositories;
@@ -12,14 +13,16 @@ namespace ticketing.Services
         private readonly IAuthRepository _authRepository;
         private readonly IHttpContextAccessor _httpContextAccesor;
         private readonly ITicketRepository _ticketRepository;
+        private readonly IFileStorageService _fileStorageService;
         private readonly IMapper _mapper;
 
-        public TicketService(IAuthRepository authRepository, ITicketRepository ticketRepository, IMapper mapper, IHttpContextAccessor httpContextAccesor)
+        public TicketService(IAuthRepository authRepository, ITicketRepository ticketRepository, IMapper mapper, IHttpContextAccessor httpContextAccesor, IFileStorageService fileStorageService)
         {
             _ticketRepository = ticketRepository;
             _authRepository = authRepository;
             _mapper = mapper;
             _httpContextAccesor = httpContextAccesor;
+            _fileStorageService = fileStorageService;
         }
 
         public async Task<List<TicketDTO>> GetAllTicketsAsync()
@@ -41,13 +44,29 @@ namespace ticketing.Services
             var user = await _authRepository.GetUserAsync(claims);
             var ticket = _mapper.Map<Ticket>(newTicket);
             ticket.OrganizationName = user!.OrganizationName;
-            // TODO: Move to enum
-            ticket.Status = "todo";
-            return await _ticketRepository.CreateNewTicketAsync(ticket);
+
+            ticket.Status = TicketStatus.Todo;
+
+            await _ticketRepository.CreateNewTicketAsync(ticket);
+
+            if (newTicket.TicketFiles != null && newTicket.TicketFiles.Count > 0)
+            {
+                foreach (var file in newTicket.TicketFiles)
+                {
+                    await _fileStorageService.SaveFileAsync(file, ticket.Id);
+                }
+            }
+            return ticket;
         }
 
         public async Task<bool> DeleteTicketAsync(int ticketId)
         {
+            var ticket = await _ticketRepository.GetTicketAsync(ticketId, false);
+            if (ticket != null)
+            {
+                await _fileStorageService.DeleteFileAsync(ticket.Id);
+            }
+
             return await _ticketRepository.DeleteTicketAsync(ticketId);
         }
 

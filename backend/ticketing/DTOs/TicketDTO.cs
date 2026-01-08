@@ -10,5 +10,7 @@
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         public List<TicketCommentDTO>? TicketComments { get;set; }
+
+        public List<MediaEntryDTO>? MediaEntries { get; set; }
     }
 }

@@ -46,11 +46,13 @@ public class TicketRepository : ITicketRepository
 
     public async Task<Ticket?> GetTicketAsync(int ticketId, bool includeComments = false)
     {
+        IQueryable<Ticket> query = _dbContext.Tickets;
+
         if (includeComments)
         {
-            return await _dbContext.Tickets.Include(t => t.Comments).ThenInclude(t => t.User).FirstOrDefaultAsync(t => t.Id == ticketId);
+            query = query.Include(t => t.Comments).ThenInclude(c => c.User);
         }
-        return await _dbContext.Tickets.FirstOrDefaultAsync(t => t.Id == ticketId);
+        return await query.Include(t => t.MediaEntries).FirstOrDefaultAsync(t => t.Id == ticketId);
     }
 
     public async Task<TicketComment> CreateTicketCommentAsync(TicketComment ticketComment)

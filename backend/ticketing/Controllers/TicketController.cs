@@ -54,13 +54,14 @@ namespace ticketing.Controllers
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error fetching ticket");
                 return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
             }
         }
 
         [Authorize(Roles = UserRoles.Admin)]
         [HttpPost("")]
-        public async Task<IActionResult> CreateNewTicketAsync([FromBody] CreateTicketDTO ticket)
+        public async Task<IActionResult> CreateNewTicketAsync([FromForm] CreateTicketDTO ticket)
         {
             try
             {

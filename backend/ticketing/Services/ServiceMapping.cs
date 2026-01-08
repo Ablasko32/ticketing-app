@@ -9,6 +9,7 @@ namespace ticketing.Services
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<ITicketService, TicketService>();
             builder.Services.AddScoped<IDashboardService, DashboardService>();
+            builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 
             return builder;
         }
