@@ -8,6 +8,8 @@ namespace ticketing.Repositories
 
         Task<bool> SaveMediaEntryAsync(MediaEntry mediaEntry);
 
+        Task<bool> SaveMediaEntriesAsync(List<MediaEntry> mediaEntries);
+
         Task<bool> DeleteMediaEntryAsync(int id);
     }
 }

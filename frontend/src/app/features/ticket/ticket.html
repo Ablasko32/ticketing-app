@@ -20,15 +20,11 @@
     <div class="ticket-media-row">
       <p>{{ media.relativePath }}</p>
       @if (isViwableFileType(media.relativePath)) {
-      <app-button
-        (btnClick)="openFile(media.relativePath)"
-        [icon]="eyeIcon"
-        [variant]="'secondary'"
-      />
+      <app-button (btnClick)="openFile(media)" [icon]="eyeIcon" [variant]="'secondary'" />
       }@else {
       <app-button
         [loading]="loading()"
-        (btnClick)="downloadFile(media.relativePath)"
+        (btnClick)="downloadFile(media)"
         [icon]="downloadIcon"
         [variant]="'secondary'"
       />

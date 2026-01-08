@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using ticketing.Constants;
 using ticketing.DTOs;
-using ticketing.Models;
 using ticketing.Services;
 
 namespace ticketing.Controllers
@@ -182,6 +182,33 @@ namespace ticketing.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error deleting ticket media");
+                return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("media/{mediaId}")]
+        public async Task<IActionResult> GetMediaFileStreamAsync(int mediaId)
+        {
+            try
+            {
+                var stream = await _fileStorageService.GetFileAsync(mediaId);
+                if (stream == null)
+                {
+                    return NotFound();
+                }
+
+                var provider = new FileExtensionContentTypeProvider();
+                if (!provider.TryGetContentType(stream.Name, out var contentType))
+                {
+                    contentType = "application/octet-stream";
+                }
+
+                return File(stream, contentType);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error fetching ticket media");
                 return StatusCode(StatusCodes.Status500InternalServerError, HTTPErrorResponses.InternalServerError);
             }
         }

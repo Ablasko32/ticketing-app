@@ -25,6 +25,13 @@ namespace ticketing.Repositories
             return result > 0;
         }
 
+        public async Task<bool> SaveMediaEntriesAsync(List<MediaEntry> mediaEntries)
+        {
+            _dbContext.MediaEntries.AddRange(mediaEntries);
+            var result = await _dbContext.SaveChangesAsync();
+            return result > 0;
+        }
+
         public async Task<bool> DeleteMediaEntryAsync(int id)
         {
             var result = await _dbContext.MediaEntries.Where(m => m.Id == id).ExecuteDeleteAsync();

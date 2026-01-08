@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ITicketCreate, ITicket, ITicketStatus, ITicketComment } from '../models/ticket.model';
 import { environment } from '../../enviroments/enviroment';
-import { IFile } from '../../shared/components/file-drop-zone/file-drop-zone';
 
 @Injectable({
   providedIn: 'root',
@@ -61,5 +60,11 @@ export class TicketService {
   // Ticket media
   deleteTicketMediaFile(mediaId: number) {
     return this.httpClient.delete<void>(`${this.API_URL}/media/${mediaId.toString()}`);
+  }
+
+  getTicketMediaFile(mediaId: string) {
+    return this.httpClient.get(`${this.API_URL}/media/${mediaId}`, {
+      responseType: 'blob',
+    });
   }
 }

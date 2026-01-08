@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal, Signal } from '@angular/core';
-import { ITicket } from '../../core/models/ticket.model';
+import { ITicket, ITicketMedia } from '../../core/models/ticket.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BackButton } from '../../shared/components/back-button/back-button';
@@ -47,22 +47,53 @@ export class Ticket {
     this.modalService.setOpen(AddNew, { ticketId: this.ticketData().id });
   }
 
-  openFile(relativePath: string) {
-    const fileUrl = `${environment.apiUrl}/uploads/${relativePath}`;
-    window.open(fileUrl, '_blank');
+  openFile(media: ITicketMedia) {
+    this.loading.set(true);
+    this.ticketService.getTicketMediaFile(media.id.toString()).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+
+        window.open(url, '_blank');
+        setTimeout(() => window.URL.revokeObjectURL(url), 10000);
+      },
+      error: () => {
+        this.toastService.showToast({
+          type: 'error',
+          title: 'Error previewing file',
+          message: 'An error occured while fetching file',
+        });
+      },
+      complete: () => {
+        this.loading.set(false);
+      },
+    });
   }
 
-  downloadFile(relativePath: string) {
+  downloadFile(media: ITicketMedia) {
     this.loading.set(true);
-    const fileUrl = `${environment.apiUrl}/uploads/${relativePath}`;
+    this.ticketService.getTicketMediaFile(media.id.toString()).subscribe({
+      next: (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
 
-    const tempLink = document.createElement('a');
-    tempLink.href = fileUrl;
-    tempLink.setAttribute('download', relativePath);
-    document.body.appendChild(tempLink);
-    tempLink.click();
-    document.body.removeChild(tempLink);
-    this.loading.set(false);
+        const tempLink = document.createElement('a');
+        tempLink.href = url;
+        tempLink.download = media.relativePath;
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        document.body.removeChild(tempLink);
+        window.URL.revokeObjectURL(url);
+      },
+      error: () => {
+        this.toastService.showToast({
+          type: 'error',
+          title: 'Error downloading file',
+          message: 'An error occured while downloading file',
+        });
+      },
+      complete: () => {
+        this.loading.set(false);
+      },
+    });
   }
 
   handleDeleteFile(mediaId: string) {

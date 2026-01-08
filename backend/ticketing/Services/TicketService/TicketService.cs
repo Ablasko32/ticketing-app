@@ -51,10 +51,7 @@ namespace ticketing.Services
 
             if (newTicket.TicketFiles != null && newTicket.TicketFiles.Count > 0)
             {
-                foreach (var file in newTicket.TicketFiles)
-                {
-                    await _fileStorageService.SaveFileAsync(file, ticket.Id);
-                }
+                await _fileStorageService.SaveFilesAsync(newTicket.TicketFiles, ticket.Id);
             }
             return ticket;
         }

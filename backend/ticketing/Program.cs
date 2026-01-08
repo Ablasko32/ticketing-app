@@ -79,8 +79,7 @@ builder.MapServices();
 
 var app = builder.Build();
 
-// Static folder
-app.UseStaticFiles();
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
