@@ -6,5 +6,6 @@ namespace ticketing.Models
     {
         public required string OrganizationName { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+
     }
 }

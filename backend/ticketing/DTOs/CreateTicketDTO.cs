@@ -7,6 +7,7 @@
 
         public required string Priority { get; set; }
 
+        public required string AsignedToUserId { get; set; }
         public List<IFormFile>? TicketFiles { get; set; } 
     }
 }

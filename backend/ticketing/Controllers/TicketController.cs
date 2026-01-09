@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
 using ticketing.Constants;
 using ticketing.DTOs;
 using ticketing.Services;
@@ -198,11 +197,7 @@ namespace ticketing.Controllers
                     return NotFound();
                 }
 
-                var provider = new FileExtensionContentTypeProvider();
-                if (!provider.TryGetContentType(stream.Name, out var contentType))
-                {
-                    contentType = "application/octet-stream";
-                }
+                var contentType = _fileStorageService.GetContentType(stream.Name);
 
                 return File(stream, contentType);
             }

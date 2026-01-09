@@ -26,6 +26,16 @@
     valueKey="value"
   ></app-form-select>
 
+  <app-form-select
+    [options]="allUsers()"
+    id="asignedUser"
+    label="Asigned user"
+    [control]="form.controls.asignedToUserId"
+    errorMessage="Asigned user is required"
+    valueKey="id"
+    nameKey="email"
+  ></app-form-select>
+
   <app-file-drop-zone [control]="form.controls.ticketFiles" />
 
   <div class="actions">

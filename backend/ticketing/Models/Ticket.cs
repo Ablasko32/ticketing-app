@@ -1,4 +1,7 @@
-﻿namespace ticketing.Models
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ticketing.Models
 {
     public class Ticket
     {
@@ -12,9 +15,14 @@
 
         public required string Status { get; set; }
 
+        public required string AsignedToUserId {get;set;}
+
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public List<TicketComment> Comments { get; set; } = new();
 
         public List<MediaEntry> MediaEntries { get; set; } = new();
+
+        [ForeignKey("AsignedToUserId")]
+        public AppUser? AssignedToUser { get; set; }
     }
 }

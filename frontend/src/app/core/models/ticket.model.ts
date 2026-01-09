@@ -31,6 +31,7 @@ export interface ITicketCreate {
   description: string;
   priority: TicketPriority;
   ticketFiles: IFile[];
+  asignedToUserId: string;
 }
 
 export type ITicketStatus = 'todo' | 'progress' | 'done';

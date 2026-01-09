@@ -9,5 +9,7 @@
         Task<bool> DeleteFileAsync(int Id);
 
         Task<FileStream?> GetFileAsync(int mediaId);
+
+        string GetContentType(string relativePath);
     }
 }

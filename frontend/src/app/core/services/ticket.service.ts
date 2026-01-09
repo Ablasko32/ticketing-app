@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ITicketCreate, ITicket, ITicketStatus, ITicketComment } from '../models/ticket.model';
 import { environment } from '../../enviroments/enviroment';
+import { TFilter } from '../../features/tickets/ticket-filter/ticket-filter';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +19,8 @@ export class TicketService {
     this.refresh.next();
   }
 
-  getAllTickets() {
-    return this.httpClient.get<ITicket[]>(this.API_URL);
+  getAllTickets(filter: TFilter) {
+    return this.httpClient.get<ITicket[]>(`${this.API_URL}/?filter=${filter}`);
   }
 
   getTicket(ticketId: string, includeComments = false) {
@@ -33,6 +34,7 @@ export class TicketService {
     formData.append('title', ticket.title);
     formData.append('description', ticket.description);
     formData.append('priority', ticket.priority);
+    formData.append('asignedToUserId', ticket.asignedToUserId);
     if (ticket.ticketFiles && ticket.ticketFiles.length > 0) {
       ticket.ticketFiles.forEach((f) => {
         formData.append('ticketFiles', f.file);

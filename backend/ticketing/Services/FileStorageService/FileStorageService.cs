@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using AutoMapper;
+using Microsoft.AspNetCore.StaticFiles;
 using ticketing.DTOs;
 using ticketing.Models;
 using ticketing.Repositories;
@@ -16,7 +17,7 @@ namespace ticketing.Services
         public FileStorageService(IWebHostEnvironment webHostEnvironment, IMediaEntryRepository mediaEntryRepository, IMapper mapper)
         {
             _webHostEnvironment = webHostEnvironment;
-            _uploadPath = Path.Combine(_webHostEnvironment.ContentRootPath,"local-storage", "uploads");
+            _uploadPath = Path.Combine(_webHostEnvironment.ContentRootPath, "local-storage", "uploads");
             _mediaEntryRepository = mediaEntryRepository;
             _mapper = mapper;
         }
@@ -41,8 +42,8 @@ namespace ticketing.Services
                 using (var stream = new FileStream(uploadPath, FileMode.Create, FileAccess.Write, FileShare.None, 4096, true))
                 {
                     await file.CopyToAsync(stream);
-                };
-                
+                }
+                ;
 
                 var newMedia = new CreateMediaEntryDTO { RelativePath = fileName, TicketId = ticketId };
 
@@ -99,6 +100,16 @@ namespace ticketing.Services
             }
 
             return new FileStream(Path.Combine(_uploadPath, mediaEntry.RelativePath), FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true);
+        }
+
+        public string GetContentType(string relativePath)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            if (provider.TryGetContentType(relativePath, out var contentType))
+            {
+                return contentType;
+            }
+            return "application/octet-stream";
         }
     }
 }
