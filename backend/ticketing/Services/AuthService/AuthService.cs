@@ -74,18 +74,17 @@ namespace ticketing.Services
                     Role = null,
                     Email = null,
                     UserId = null,
-                    //TODO: Add OrganizationName to claims to be extracted from context
-                    //OrganizationName = null
+                    OrganizationName = null
                 };
             }
 
             return new AuthStatusDTO
             {
                 IsAuthenticated = user.Identity?.IsAuthenticated ?? false,
-                Role = user.FindFirst(ClaimTypes.Role)?.Value,
+                Role = user.FindFirst(ClaimTypes.Role)?.Value ,
                 Email = user.FindFirst(ClaimTypes.Email)?.Value,
                 UserId = user.FindFirst(ClaimTypes.NameIdentifier)?.Value,
-                //OrganizationName = user.FindFirst("OrganizationName")?.Value
+                OrganizationName = user.FindFirst("OrganizationName")?.Value
             };
         }
 

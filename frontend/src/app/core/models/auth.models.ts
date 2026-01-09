@@ -22,6 +22,7 @@ export interface IAuthStatus {
   isAuthenticated: boolean;
   email: string;
   role: TRoles;
+  organizationName: string;
 }
 
 export interface IAuthResponse {

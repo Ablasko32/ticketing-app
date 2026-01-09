@@ -6,9 +6,11 @@
   variant="secondary"
 />
 <nav [class.showMobileMenu]="isOpen()">
+  <h2 class="organization-name">{{ organizationName() }}</h2>
   <p class="role-welcome">
     Welcome, <span>{{ role() }}</span>
   </p>
+
   <ul>
     @for (navItem of userRoutes; track $index) {
 

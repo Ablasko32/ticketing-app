@@ -6,10 +6,11 @@ import { TicketService } from '../../../../core/services/ticket.service';
 import { ToastService } from '../../../../core/services/toast.service';
 import { ModalService } from '../../../../core/services/modal.service';
 import { Router } from '@angular/router';
+import { TextArea } from '../../../../shared/components/text-area/text-area';
 
 @Component({
   selector: 'app-add-new',
-  imports: [ReactiveFormsModule, FormInput, Button],
+  imports: [ReactiveFormsModule, TextArea, Button, TextArea],
   templateUrl: './add-new.html',
   styleUrl: './add-new.css',
 })

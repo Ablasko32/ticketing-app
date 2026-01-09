@@ -13,10 +13,11 @@ import { UserManagerService } from '../../core/services/userManager.service';
 import { IUser } from '../../core/models/user.model';
 import { AuthService } from '../../core/services/auth.service';
 import { filter, map } from 'rxjs';
+import { TextArea } from '../../shared/components/text-area/text-area';
 
 @Component({
   selector: 'app-add-new',
-  imports: [ReactiveFormsModule, FormInput, Button, FormSelect, BackButton, FileDropZone],
+  imports: [ReactiveFormsModule, FormInput, Button, FormSelect, BackButton, FileDropZone, TextArea],
   templateUrl: './add-new.html',
   styleUrl: './add-new.css',
 })

@@ -1,0 +1,19 @@
+<div class="control">
+  <label [for]="id()">
+    {{ label() }}
+    @if (required()) {
+    <span class="required">*</span>
+    }
+  </label>
+  <textarea
+    [rows]="rows()"
+    [id]="id()"
+    [placeholder]="placeholder()"
+    [formControl]="control()"
+  ></textarea>
+  <div class="error-container">
+    @if (showError) {
+    <p class="error">{{ errorMessage() }}</p>
+    }
+  </div>
+</div>

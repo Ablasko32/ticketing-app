@@ -14,6 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Singal R
+builder.Services.AddSignalR();
+
 // Add Mapper
 builder.Services.AddAutoMapper(cfg => { }, typeof(Program));
 
@@ -33,7 +36,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredUniqueChars = 0;
-}).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+}).AddEntityFrameworkStores<ApplicationContext>()
+  .AddDefaultTokenProviders()
+  .AddClaimsPrincipalFactory<CustomClaimsFactory>();
 
 //Configure cookies
 builder.Services.ConfigureApplicationCookie(options =>
@@ -78,8 +83,6 @@ builder.MapServices();
 // Building
 
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

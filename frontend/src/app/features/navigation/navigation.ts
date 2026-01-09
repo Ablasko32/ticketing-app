@@ -18,6 +18,7 @@ export class Navigation {
   isOpen = signal(false);
   private authService = inject(AuthService);
   role = computed(() => this.authService.authStatus()?.role);
+  organizationName = computed(() => this.authService.authStatus()?.organizationName);
   closeIcon = X;
 
   userRoutes = routes;

@@ -7,6 +7,12 @@ nav {
   animation: slideIn 0.2s ease-in-out;
   padding-bottom: 10rem;
 }
+.organization-name {
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+}
 
 .role-welcome {
   font-size: 1.4rem;
