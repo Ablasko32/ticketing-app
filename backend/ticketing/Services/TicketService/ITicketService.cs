@@ -5,7 +5,7 @@ namespace ticketing.Services
 {
     public interface ITicketService
     {
-        Task<List<TicketDTO>> GetAllTicketsAsync();
+        Task<List<TicketDTO>> GetAllTicketsAsync(string? filter);
 
         Task<Ticket> CreateNewTicketAsync(CreateTicketDTO newTicket);
 

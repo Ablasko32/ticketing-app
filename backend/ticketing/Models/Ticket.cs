@@ -24,5 +24,6 @@ namespace ticketing.Models
 
         [ForeignKey("AsignedToUserId")]
         public AppUser? AssignedToUser { get; set; }
+    
     }
 }

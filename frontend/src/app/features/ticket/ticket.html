@@ -6,6 +6,8 @@
       <span class="ticket-date">/{{ ticketData().dateCreated | date : 'dd/MM/yyyy' }} </span>
     </h2>
   </header>
+  <h3>Asigned user</h3>
+  <p class="assigned-user">{{ ticketData().asignedUserName }}</p>
   <h3>Priority</h3>
   <app-priority-flames [priority]="ticketData().priority" />
   <h3>Description</h3>

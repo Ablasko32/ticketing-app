@@ -26,7 +26,7 @@ public class DashboardRepository:IDashboardRepository
     {
         var user = await _authRepository.GetUserAsync(claims);
 
-        var tickets = await _ticketRepository.GetAllTicketsAsync(claims);
+        var tickets = await _ticketRepository.GetAllTicketsAsync(claims,null);
 
         var stats = new DashboardStatsDTO
         {

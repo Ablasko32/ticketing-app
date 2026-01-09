@@ -25,3 +25,9 @@ h3 {
   align-items: center;
   gap: 1rem;
 }
+
+.assigned-user {
+  color: var(--text-muted);
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+}

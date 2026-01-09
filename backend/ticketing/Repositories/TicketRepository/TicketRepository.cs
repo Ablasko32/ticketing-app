@@ -17,11 +17,16 @@ public class TicketRepository : ITicketRepository
         _authRepository = authRepository;
     }
 
-    public async Task<List<Ticket>> GetAllTicketsAsync(ClaimsPrincipal claims)
+    public async Task<List<Ticket>> GetAllTicketsAsync(ClaimsPrincipal claims, string? filter)
     {
         var user = await _authRepository.GetUserAsync(claims);
+        IQueryable<Ticket> query = _dbContext.Tickets.Where(t => t.OrganizationName == user!.OrganizationName);
 
-        return await _dbContext.Tickets.Where(t => t.OrganizationName == user!.OrganizationName).ToListAsync();
+        if (filter == null || filter == "all")
+        {
+            return await query.ToListAsync();
+        }
+        return await query.Where(t => t.AsignedToUserId == user!.Id).ToListAsync();
     }
 
     public async Task<Ticket> CreateNewTicketAsync(Ticket ticket)
@@ -52,7 +57,7 @@ public class TicketRepository : ITicketRepository
         {
             query = query.Include(t => t.Comments).ThenInclude(c => c.User);
         }
-        return await query.Include(t => t.MediaEntries).FirstOrDefaultAsync(t => t.Id == ticketId);
+        return await query.Include(t => t.MediaEntries).Include(t=>t.AssignedToUser).FirstOrDefaultAsync(t => t.Id == ticketId);
     }
 
     public async Task<TicketComment> CreateTicketCommentAsync(TicketComment ticketComment)

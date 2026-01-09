@@ -8,7 +8,10 @@ public class TicketMappingProfile : Profile
 {
     public TicketMappingProfile()
     {
-        CreateMap<Ticket, TicketDTO>().ForMember(dest => dest.TicketComments, opt => opt.MapFrom(src => src.Comments)).ForMember(src=>src.MediaEntries,opt=>opt.MapFrom(d=>d.MediaEntries));
+        CreateMap<Ticket, TicketDTO>().ForMember(dest => dest.TicketComments, opt => opt.MapFrom(src => src.Comments))
+                                      .ForMember(src => src.MediaEntries, opt => opt.MapFrom(d => d.MediaEntries))
+                                      .ForMember(dest=>dest.AsignedUserName,opt=>opt.MapFrom(src=>src.AssignedToUser!.Email));
+                                      
         CreateMap<CreateTicketDTO, Ticket>();
         CreateMap<UpdateTicketDTO, Ticket>().ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 

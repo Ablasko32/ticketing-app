@@ -23,11 +23,11 @@ namespace ticketing.Controllers
 
         [Authorize]
         [HttpGet("")]
-        public async Task<IActionResult> GetAllTicketsAsync()
+        public async Task<IActionResult> GetAllTicketsAsync([FromQuery] string filter)
         {
             try
             {
-                var result = await _ticketService.GetAllTicketsAsync();
+                var result = await _ticketService.GetAllTicketsAsync(filter);
                 return Ok(result);
             }
             catch (Exception ex)

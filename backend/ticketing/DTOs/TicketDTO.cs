@@ -9,6 +9,8 @@
         public required string Status { get; set; }
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
+        public required string  AsignedUserName { get; set; }
+
         public List<TicketCommentDTO>? TicketComments { get;set; }
 
         public List<MediaEntryDTO>? MediaEntries { get; set; }

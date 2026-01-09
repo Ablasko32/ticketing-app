@@ -5,7 +5,7 @@ namespace ticketing.Repositories
 {
     public interface ITicketRepository
     {
-        Task<List<Ticket>> GetAllTicketsAsync(ClaimsPrincipal claims);
+        Task<List<Ticket>> GetAllTicketsAsync(ClaimsPrincipal claims, string? filter);
 
         Task<Ticket> CreateNewTicketAsync(Ticket ticket);
 

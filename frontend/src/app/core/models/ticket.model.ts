@@ -10,6 +10,7 @@ export interface ITicket {
   priority: TicketPriority;
   ticketComments?: ITicketComment[];
   mediaEntries?: ITicketMedia[];
+  asignedUserName: string;
 }
 
 export interface ITicketComment {

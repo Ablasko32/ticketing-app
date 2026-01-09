@@ -6,4 +6,5 @@ select {
   padding: 0.5rem 1.4rem;
   font-size: 1.4rem;
   cursor: pointer;
+  font-weight: 500;
 }

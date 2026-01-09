@@ -25,16 +25,17 @@ namespace ticketing.Services
             _fileStorageService = fileStorageService;
         }
 
-        public async Task<List<TicketDTO>> GetAllTicketsAsync()
+        public async Task<List<TicketDTO>> GetAllTicketsAsync(string? filter)
         {
             var claims = _httpContextAccesor.HttpContext!.User;
-            var tickets = await _ticketRepository.GetAllTicketsAsync(claims);
+            var tickets = await _ticketRepository.GetAllTicketsAsync(claims, filter);
             return _mapper.Map<List<TicketDTO>>(tickets);
         }
 
         public async Task<TicketDTO> GetTicketAsync(int ticketId, bool includeComments = false)
         {
             var ticket = await _ticketRepository.GetTicketAsync(ticketId, includeComments);
+            
             return _mapper.Map<TicketDTO>(ticket);
         }
 

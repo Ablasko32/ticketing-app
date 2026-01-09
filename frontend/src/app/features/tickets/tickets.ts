@@ -34,10 +34,10 @@ export class Tickets implements OnInit {
         if (filter && ALLOWED_FILTERS.includes(filter)) {
           this.activeFilter.set(filter as TFilter);
         }
+        this.loadTickets();
       },
     });
 
-    this.loadTickets();
     this.ticketService.refresh$.subscribe(() => {
       this.loadTickets();
     });
