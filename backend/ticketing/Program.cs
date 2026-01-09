@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ticketing.Data;
+using ticketing.Hubs;
 using ticketing.Models;
 using ticketing.Repositories;
 using ticketing.Services;
@@ -101,6 +102,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapSignalRHubs();
 
 // Check and execute pending migrations and seed roles
 await app.MigrateDbAsync();

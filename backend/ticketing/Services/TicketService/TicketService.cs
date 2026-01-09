@@ -1,7 +1,9 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.SignalR;
 using ticketing.Constants;
 using ticketing.DTOs;
+using ticketing.Hubs;
 using ticketing.Models;
 using ticketing.Repositories;
 using ticketing.Repositories.Interface;
@@ -15,14 +17,18 @@ namespace ticketing.Services
         private readonly ITicketRepository _ticketRepository;
         private readonly IFileStorageService _fileStorageService;
         private readonly IMapper _mapper;
+        private readonly IHubContext<TicketHub> _ticketHub;
 
-        public TicketService(IAuthRepository authRepository, ITicketRepository ticketRepository, IMapper mapper, IHttpContextAccessor httpContextAccesor, IFileStorageService fileStorageService)
+        public TicketService(IAuthRepository authRepository, ITicketRepository ticketRepository, IMapper mapper,
+            IHttpContextAccessor httpContextAccesor, IFileStorageService fileStorageService,
+            IHubContext<TicketHub> ticketHub)
         {
             _ticketRepository = ticketRepository;
             _authRepository = authRepository;
             _mapper = mapper;
             _httpContextAccesor = httpContextAccesor;
             _fileStorageService = fileStorageService;
+            _ticketHub = ticketHub;
         }
 
         public async Task<List<TicketDTO>> GetAllTicketsAsync(string? filter)
@@ -35,7 +41,7 @@ namespace ticketing.Services
         public async Task<TicketDTO> GetTicketAsync(int ticketId, bool includeComments = false)
         {
             var ticket = await _ticketRepository.GetTicketAsync(ticketId, includeComments);
-            
+
             return _mapper.Map<TicketDTO>(ticket);
         }
 
@@ -54,6 +60,7 @@ namespace ticketing.Services
             {
                 await _fileStorageService.SaveFilesAsync(newTicket.TicketFiles, ticket.Id);
             }
+            await _ticketHub.Clients.Group(ticket.OrganizationName).SendAsync("NewTicketAlert", $"New ticket created by {user.UserName}");
             return ticket;
         }
 

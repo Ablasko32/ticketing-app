@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using ticketing.Data;
+using ticketing.Hubs;
 using ticketing.Models;
 using ticketing.Repositories.Interface;
 
@@ -10,11 +12,13 @@ public class TicketRepository : ITicketRepository
 {
     private readonly ApplicationContext _dbContext;
     private readonly IAuthRepository _authRepository;
+   
 
     public TicketRepository(ApplicationContext dbContext, IAuthRepository authRepository)
     {
         _dbContext = dbContext;
         _authRepository = authRepository;
+    
     }
 
     public async Task<List<Ticket>> GetAllTicketsAsync(ClaimsPrincipal claims, string? filter)
@@ -57,7 +61,7 @@ public class TicketRepository : ITicketRepository
         {
             query = query.Include(t => t.Comments).ThenInclude(c => c.User);
         }
-        return await query.Include(t => t.MediaEntries).Include(t=>t.AssignedToUser).FirstOrDefaultAsync(t => t.Id == ticketId);
+        return await query.Include(t => t.MediaEntries).Include(t => t.AssignedToUser).FirstOrDefaultAsync(t => t.Id == ticketId);
     }
 
     public async Task<TicketComment> CreateTicketCommentAsync(TicketComment ticketComment)
