@@ -8,10 +8,19 @@ import { TicketService } from '../../../core/services/ticket.service';
 import { ToastService } from '../../../core/services/toast.service';
 import { RouterLink } from '@angular/router';
 import { PriorityFlames } from './priority-flames/priority-flames';
+import { RoleDirective } from '../../../shared/directives/role.directive';
 
 @Component({
   selector: 'app-ticket',
-  imports: [CdkDrag, LucideAngularModule, DatePipe, Button, RouterLink, PriorityFlames],
+  imports: [
+    CdkDrag,
+    LucideAngularModule,
+    DatePipe,
+    Button,
+    RouterLink,
+    PriorityFlames,
+    RoleDirective,
+  ],
   templateUrl: './ticket.html',
   styleUrl: './ticket.css',
 })

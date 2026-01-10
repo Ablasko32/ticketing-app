@@ -1,9 +1,7 @@
 ﻿using System.Security.Claims;
 using AutoMapper;
-using Microsoft.AspNetCore.SignalR;
 using ticketing.Constants;
 using ticketing.DTOs;
-using ticketing.Hubs;
 using ticketing.Models;
 using ticketing.Repositories;
 using ticketing.Repositories.Interface;
@@ -17,18 +15,21 @@ namespace ticketing.Services
         private readonly ITicketRepository _ticketRepository;
         private readonly IFileStorageService _fileStorageService;
         private readonly IMapper _mapper;
-        private readonly IHubContext<TicketHub> _ticketHub;
+        private readonly INotificationService _notificationService;
 
-        public TicketService(IAuthRepository authRepository, ITicketRepository ticketRepository, IMapper mapper,
-            IHttpContextAccessor httpContextAccesor, IFileStorageService fileStorageService,
-            IHubContext<TicketHub> ticketHub)
+        public TicketService(IAuthRepository authRepository,
+            ITicketRepository ticketRepository,
+            IMapper mapper,
+            IHttpContextAccessor httpContextAccesor,
+            IFileStorageService fileStorageService,
+            INotificationService notificationService)
         {
             _ticketRepository = ticketRepository;
             _authRepository = authRepository;
             _mapper = mapper;
             _httpContextAccesor = httpContextAccesor;
             _fileStorageService = fileStorageService;
-            _ticketHub = ticketHub;
+            _notificationService = notificationService;
         }
 
         public async Task<List<TicketDTO>> GetAllTicketsAsync(string? filter)
@@ -60,7 +61,9 @@ namespace ticketing.Services
             {
                 await _fileStorageService.SaveFilesAsync(newTicket.TicketFiles, ticket.Id);
             }
-            await _ticketHub.Clients.Group(ticket.OrganizationName).SendAsync("NewTicketAlert", $"New ticket created by {user.UserName}");
+
+            await _notificationService.SendNewTicketAlert(ticket.OrganizationName, $"New ticket created by {user.UserName}");
+
             return ticket;
         }
 
@@ -94,6 +97,9 @@ namespace ticketing.Services
             var ticketComment = _mapper.Map<TicketComment>(ticketCommentDTO);
             ticketComment.CreatedByUserId = claims.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var createdTicketComment = await _ticketRepository.CreateTicketCommentAsync(ticketComment);
+
+            await _notificationService.SendNewCommentAlert(ticketComment.TicketId, $"New comment");
+
             return _mapper.Map<TicketCommentDTO>(createdTicketComment);
         }
 

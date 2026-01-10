@@ -1,7 +1,7 @@
-import { Component, computed, inject, signal, Signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal, Signal } from '@angular/core';
 import { ITicket, ITicketMedia } from '../../core/models/ticket.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { BackButton } from '../../shared/components/back-button/back-button';
 import { DatePipe } from '@angular/common';
 import { LucideAngularModule, PlusIcon, Eye, Download, Trash } from 'lucide-angular';
@@ -10,9 +10,9 @@ import { TicketComments } from './ticket-comments/ticket-comments';
 import { Button } from '../../shared/components/button/button';
 import { ModalService } from '../../core/services/modal.service';
 import { AddNew } from './ticket-comments/add-new/add-new';
-import { environment } from '../../enviroments/enviroment';
 import { TicketService } from '../../core/services/ticket.service';
 import { ToastService } from '../../core/services/toast.service';
+import { SignalRHubService } from '../../core/services/signalRHub.service';
 
 @Component({
   selector: 'app-ticket',
@@ -20,7 +20,7 @@ import { ToastService } from '../../core/services/toast.service';
   templateUrl: './ticket.html',
   styleUrl: './ticket.css',
 })
-export class Ticket {
+export class Ticket implements OnInit {
   loading = signal(false);
 
   private activatedRoute = inject(ActivatedRoute);
@@ -29,6 +29,8 @@ export class Ticket {
   private ticketService = inject(TicketService);
   private toastService = inject(ToastService);
   private router = inject(Router);
+  private signalRHubService = inject(SignalRHubService);
+  private destroyRef = inject(DestroyRef);
 
   plusIcon = PlusIcon;
   eyeIcon = Eye;
@@ -36,6 +38,26 @@ export class Ticket {
   trashIcon = Trash;
 
   ticketData: Signal<ITicket> = computed(() => this.data()!['ticketData']);
+
+  ngOnInit(): void {
+    const ticketId = this.ticketData().id;
+    this.signalRHubService.joinTicketGroup(Number(ticketId));
+    this.signalRHubService.commentSubject$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((message: string) => {
+        this.toastService.showToast({
+          type: 'success',
+          title: 'New comment',
+          message,
+        });
+        console.log('TRIGGER');
+        this.router.navigate([]);
+      });
+
+    this.destroyRef.onDestroy(() => {
+      this.signalRHubService.leaveTicketGroup(Number(ticketId));
+    });
+  }
 
   isViwableFileType(relativePath: string) {
     const fileType = relativePath.split('.').pop()?.toLowerCase() || '';

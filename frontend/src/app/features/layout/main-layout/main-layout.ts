@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Navigation } from '../../navigation/navigation';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
-import { TicketHubService } from '../../../core/services/ticketHub.service';
+import { SignalRHubService } from '../../../core/services/signalRHub.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -12,15 +12,15 @@ import { TicketHubService } from '../../../core/services/ticketHub.service';
 })
 export class MainLayout implements OnInit, OnDestroy {
   private authService = inject(AuthService);
-  private ticketHubService = inject(TicketHubService);
+  private singalRHubService = inject(SignalRHubService);
 
   authStatus = this.authService.authStatus;
 
   ngOnInit(): void {
-    this.ticketHubService.startConnection();
+    this.singalRHubService.startConnection();
   }
 
   ngOnDestroy(): void {
-    this.ticketHubService.stopConnection();
+    this.singalRHubService.stopConnection();
   }
 }

@@ -103,7 +103,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapSignalRHubs();
+app.MapHub<SignalRHub>("/notifications");
 
 // Check and execute pending migrations and seed roles
 await app.MigrateDbAsync();

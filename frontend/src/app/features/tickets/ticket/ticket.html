@@ -3,7 +3,13 @@
     <h3>{{ ticket().title }}</h3>
 
     <app-priority-flames [priority]="ticket().priority" />
-    <app-button size="sm" [loading]="loading()" [icon]="trash" (click)="onDelete(ticket().id)" />
+    <app-button
+      *appRole="['admin']"
+      size="sm"
+      [loading]="loading()"
+      [icon]="trash"
+      (click)="onDelete(ticket().id)"
+    />
   </header>
   <p>{{ ticket().description }}</p>
   <p>{{ ticket().dateCreated | date : 'dd/MM/yyyy' }}</p>
